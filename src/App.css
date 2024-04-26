@@ -36,3 +36,184 @@
     transform: rotate(360deg);
   }
 }
+
+.mainContainer {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  font-size: 64px;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+}
+
+.resultContainer,
+.historyItem {
+  flex-direction: row;
+  display: flex;
+  width: 400px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.historyContainer {
+  flex-direction: column;
+  display: flex;
+  height: 200px;
+  align-items: center;
+  flex-grow: 5;
+  justify-content: flex-start;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+
+.inputContainer > .errorLabel {
+  color: red;
+  font-size: 12px;
+}
+
+.inputBox {
+  height: 48px;
+  width: 400px;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
+}
+
+.mainBox{
+  width: 900px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 0;
+  box-shadow: 0 0 25px 0 #27272730;
+  border-radius: 25px;
+   overflow: hidden;
+
+}
+
+.mainBox > div{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ 
+
+}
+
+.mainBox >div.rightHalf{
+  padding: 50px;
+  box-sizing: border-box;
+  background-color: #e4eaee;
+}
+
+.mainBox >div.leftHalf{
+background: url('https://images.squarespace-cdn.com/content/v1/58b7487fe58c62846e27aaee/1620723889244-0M6WBI1K4NHDV6FG4IMX/seedling2.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center right;
+position: relative;
+}
+
+
+.mainBox >div.leftHalf::before{
+ content: '';
+ position: absolute;
+ left: 0;
+ top: 0;
+ width: 100%;
+ height: 100%;
+ background-color: #02435580;
+ mix-blend-mode: multiply;
+
+  }
+
+.inputButton{
+  height: 48px;
+  width: 400px;
+  background: #024355;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.titleContainer div{
+  font-size:36px;
+  margin-bottom: 25px;
+  font-weight: 800;
+  color: #363636;
+}
+
+.inputContainer{
+  width: 85%;
+}
+
+.inputContainer input{
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  outline: 0;
+  background-color: #fff;
+  font-size: 14px;
+  color: #4c4c4c;
+  padding-left: 15px;
+  font-family: 'Montserrat';
+}
+
+.inputContainer input.inputButton{
+  background-color: teal;
+  color: #fff;
+  font-weight: 700;
+  padding: 0;
+  transition: 0.3s ease;
+  font-family: 'Montserrat';
+}
+
+
+.inputContainer input.inputButton:hover{
+  background-color: rgb(2, 87, 87);
+  color: #fff;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+}
+
+div > a{
+  font-size: 13px;
+  color: #4c4c4c;
+  text-decoration: underline;
+}
+
+.logoContainer {
+  margin: 25px;
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.logoContainer img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
