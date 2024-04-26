@@ -42,7 +42,8 @@ const Login = (props) => {
         // Signed in
         const user = userCredential.user;
         alert(`Sign-in Successful | Welcome ${user}`)
-        // navigate("/home")
+        props.setEmail(email)
+        navigate("/")
         console.log(user);
       })
       .catch((error) => {
