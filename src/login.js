@@ -1,31 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from './Resources/Logo.jpg'
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
 import Alert from '@mui/joy/Alert';
-import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
 import GlobalStyles from '@mui/joy/GlobalStyles';
-import CssBaseline from '@mui/joy/CssBaseline';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Checkbox from '@mui/joy/Checkbox';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
 import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-
+import AuthContext from './AuthContext';
 
 
 
 
 
 const Login = (props) => {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('');
@@ -37,14 +35,11 @@ const Login = (props) => {
 
   const onLogin = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        alert(`Sign-in Successful | Welcome ${user}`)
+    login(email, password)
+      .then(() => {
+        alert(`Sign-in Successful | Welcome ${email}`)
         props.setEmail(email)
         navigate("/")
-        console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;

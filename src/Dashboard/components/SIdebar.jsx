@@ -29,6 +29,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import Forest from '@mui/icons-material/Forest';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import AuthContext from '../../AuthContext.js';
 
 // import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils.jsx';
@@ -57,6 +58,8 @@ function Toggler({
 }
 
 export default function Sidebar(props) {
+
+  const { user } = React.useContext(AuthContext)
   return (
     <Sheet
       className="Sidebar"
@@ -283,8 +286,8 @@ export default function Sidebar(props) {
           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">{props.name}</Typography>
-          <Typography level="body-xs">{props.email}</Typography>
+          <Typography level="title-sm">"Full Name"</Typography>
+          <Typography level="body-xs">{user.email}</Typography>
         </Box>
         <IconButton size="sm" variant="plain" color="neutral">
           <LogoutRoundedIcon />

@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { Box, Card, Input, TextField, Typography } from '@mui/joy'
 import Button from '@mui/joy/Button';
 import Stack from '@mui/joy/Stack';
-import logo from './Resources/Logo.jpg'
 import Message from './Message';
+import Header from './Dashboard/components/Header';
 //import logo from 'logo.png'
 
 
@@ -23,8 +23,6 @@ const Chat = (props) => {
     }]);
 
 
-
-    const { name, email } = props
     const [prompt, setPrompt] = useState("");
     const scroll = useRef()
     const onSend = () => {
@@ -50,11 +48,11 @@ const Chat = (props) => {
     }
 
     return (
-        <div disableTransitionOnChange>
+        <div >
             <CssBaseline />
             <Box sx={{ display: 'flex', minHeight: '100dvh', background: '#D5E5E5' }}>
-                <Sidebar name="Full Name" email={email} />
-                {/* <Header /> */}
+                <Sidebar />
+                <Header />
                 <Box
                     component="main"
                     className="MainContent"
@@ -75,14 +73,12 @@ const Chat = (props) => {
                     }}
                 >
                     <div className="chat-box" style={{ width: '100%' }}>
-                        <Stack className="messages-wrapper" sx={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                        <Stack className="messages-wrapper" sx={{ display: 'flex', flexDirection: 'column', gap: '15px', maxWidth: '700px', margin: 'auto' }}>
                             {messages?.map((message) => (
                                 <Message key={message.id} message={message} />
                             ))}
                         </Stack>
-                        {/* when a new message enters the chat, the screen scrolls down to the scroll div */}
 
-                        {/* <SendMessage scroll={scroll} /> */}
                     </div>
                     <span style={{ marginTop: '150px' }} ref={scroll}></span>
                     <Box fullWidth component="div" sx={{ display: 'flex', flexDirection: 'row', gap: 2, position: 'fixed', width: { md: 'calc(100% - 300px)', xs: '90%' }, bottom: '25px' }}>
@@ -93,6 +89,8 @@ const Chat = (props) => {
 
             </Box>
         </div >
+
+
     );
 
 }
