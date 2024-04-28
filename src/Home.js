@@ -3,7 +3,7 @@ import Sidebar from './Dashboard/components/SIdebar'
 import React, { useState } from 'react'
 import CssBaseline from '@mui/joy/CssBaseline';
 import { useNavigate } from 'react-router-dom'
-import { Box, Card, Typography } from '@mui/joy'
+import { AspectRatio, Box, Card, Typography } from '@mui/joy'
 import Header from './Dashboard/components/Header';
 import Button from '@mui/joy/Button';
 import Stack from '@mui/joy/Stack';
@@ -15,7 +15,10 @@ import logo from './Resources/Logo.jpg'
 const Home = (props) => {
   const [name, setName] = useState("Wajeehehe")
   let navigate = useNavigate();
-
+  const cards = {
+    minWidth: '150px', aspectRatio: { md: '1.2/1', xs: 'unset' }, width: { lg: '24%', md: '24%', xs: '100%' }, padding: 5, minHeight: 200, display: 'flex', justifyContent: 'center',
+    alignItems: 'center'
+  };
 
   return (
     <div disableTransitionOnChange>
@@ -27,41 +30,27 @@ const Home = (props) => {
           component="main"
           className="MainContent"
           sx={{
-            pt: { xs: 'calc(12px + var(--Header-height))', md: 3 },
+            pt: { xs: 'calc(25px + var(--Header-height)) !important', md: 3 },
             padding: { xs: 2, sm: 2, md: 3 },
             flex: 1,
             display: 'flex',
-            flexDirection: 'row',
+            flexDirection: { md: 'row', xs: 'column' },
             minWidth: 0,
             height: '100dvh',
-            gap: 3,
+            columnGap: 0,
+            gap: { md: 1, xs: 3 },
             overflow: 'auto',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
+            justifyContent: { md: 'space-evenly', xs: 'flex-start' },
+            alignItems: { md: 'flex-start', xs: 'center' },
             alignContent: 'flex-start',
             flexWrap: 'wrap'
           }}
         >
-          <Card sx={{
-            backDropFilter: 'blur(2px)', maxWidth: '250px', minWidth: '200px', width: '33%', padding: 5, minHeight: 200, display: 'flex', justifyContent: 'center',
-            alignItems: 'center'
-          }}>Hello {name ? name : "Wajeeh"}</Card>
-          <Card sx={{
-            maxWidth: '250px', minWidth: '200px', width: '33%', padding: 5, minHeight: 200, display: 'flex', justifyContent: 'center',
-            alignItems: 'center'
-          }}>Hello {name ? name : "Wajeeh"}</Card>
-          <Card sx={{
-            maxWidth: '250px', minWidth: '200px', width: '33%', padding: 5, minHeight: 200, display: 'flex', justifyContent: 'center',
-            alignItems: 'center'
-          }}>Hello {name ? name : "Wajeeh"}</Card>
-          <Card sx={{
-            maxWidth: '250px', minWidth: '200px', width: '33%', padding: 5, minHeight: 200, display: 'flex', justifyContent: 'center',
-            alignItems: 'center'
-          }}>Hello {name ? name : "Wajeeh"}</Card>
-          <Card sx={{
-            minWidth: '200px', width: '100%', padding: 5, minHeight: 200, display: 'flex', justifyContent: 'center',
-            alignItems: 'center'
-          }}>Hello {name ? name : "Wajeeh"}</Card>
+          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
+          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
+          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
+          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
+
           {/* <MyProfile /> */}
         </Box>
       </Box>

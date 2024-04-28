@@ -57,11 +57,13 @@ const Chat = (props) => {
                     component="main"
                     className="MainContent"
                     sx={{
-                        pt: { xs: 'calc(12px + var(--Header-height))', md: 3 },
+                        pt: { xs: 'calc(15px + var(--Header-height)) !important', md: 3 },
+                        pb: '0 !important',
                         padding: { xs: 2, sm: 2, md: 3 },
+
                         flex: 1,
                         display: 'flex',
-                        flexDirection: 'row',
+                        flexDirection: 'column',
                         minWidth: 0,
                         height: '100dvh',
                         gap: 3,
@@ -69,10 +71,10 @@ const Chat = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'flex-start',
                         alignContent: 'flex-start',
-                        flexWrap: 'wrap'
+                        flexWrap: 'nowrap'
                     }}
                 >
-                    <div className="chat-box" style={{ width: '100%' }}>
+                    <div className="chat-box" style={{ width: '100%', position: 'sticky', top: '25px' }}>
                         <Stack className="messages-wrapper" sx={{ display: 'flex', flexDirection: 'column', gap: '15px', maxWidth: '700px', margin: 'auto' }}>
                             {messages?.map((message) => (
                                 <Message key={message.id} message={message} />
@@ -81,8 +83,11 @@ const Chat = (props) => {
 
                     </div>
                     <span style={{ marginTop: '150px' }} ref={scroll}></span>
-                    <Box sx={{ position: 'sticky', bottom: '-30px', left: '0', height: '80px', width: '100%', background: '#d5e5e5' }}>
-                        <Box fullWidth component="div" sx={{ background: '#d5e5e5', display: 'flex', flexDirection: 'row', gap: 2, position: 'fixed', width: { md: 'calc(100% - 300px)', xs: '90%' }, bottom: '25px' }}>
+                    <Box sx={{ padding: '25px 0', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'sticky', bottom: '0', left: '0', height: '80px', width: '100%', background: '#d5e5e5' }}>
+                        <Box component="div" sx={{
+                            background: '#d5e5e5', display: 'flex', flexDirection: 'row', gap: 2,
+                            position: '', width: '100%', bottom: '25px', maxWidth: '700px'
+                        }}>
                             <Input placeholder="Type in here…" size="lg" type=" text" name="" fullWidth value={prompt} onChange={(ev) => setPrompt(ev.target.value)} />
                             <Button color="success" onClick={onSend} scroll={scroll}> Send </Button>
                         </Box>

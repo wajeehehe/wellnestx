@@ -14,8 +14,11 @@ const Message = ({ message }) => {
             style={{
                 width: '100%',
                 display: 'flex',
-                justifyContent: (message.uid === user.uid) ? "flex-end" : "flex-start"
+                justifyContent: (message.uid === user.uid) ? "flex-end" : "flex-start",
+                alignItems: 'center',
+                gap: 20
             }}>
+            <Avatar sx={{ order: (message.uid === user.uid) ? '1' : '0' }}></Avatar>
             <Box sx={{
                 minWidth: '50px', maxWidth: '300px', borderRadius: '35px',
                 boxShadow: '0 0 35px 0 #0001',

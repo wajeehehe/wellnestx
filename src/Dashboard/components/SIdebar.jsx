@@ -64,6 +64,7 @@ export default function Sidebar(props) {
     <Sheet
       className="Sidebar"
       sx={{
+        boxShadow: '0 0 35px 0 #0002',
         position: { xs: 'fixed', md: 'sticky' },
         transform: {
           xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))',
