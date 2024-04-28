@@ -30,10 +30,9 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import Forest from '@mui/icons-material/Forest';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AuthContext from '../../AuthContext.js';
-
+import { useContext } from 'react';
 // import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils.jsx';
-
 function Toggler({
   defaultExpanded = false,
   renderToggle }) {
@@ -58,6 +57,7 @@ function Toggler({
 }
 
 export default function Sidebar(props) {
+  const { logout } = useContext(AuthContext);
 
   const { user } = React.useContext(AuthContext)
   return (
@@ -289,7 +289,7 @@ export default function Sidebar(props) {
           <Typography level="title-sm">"Full Name"</Typography>
           <Typography level="body-xs">{user.email}</Typography>
         </Box>
-        <IconButton size="sm" variant="plain" color="neutral">
+        <IconButton size="sm" variant="plain" color="neutral" onClick={logout}>
           <LogoutRoundedIcon />
         </IconButton>
       </Box>

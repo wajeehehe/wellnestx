@@ -6,24 +6,21 @@ import './App.css'
 import Chat from './chat.jsx'
 import { useEffect, useState } from 'react'
 import AuthProvider from './AuthProvider.js'
+import PrivateRoute from './PrivateRoute.js'
+
 
 
 function App() {
-
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [email, setEmail] = useState('')
-
-
 
   return (
     <div className="App">
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
-            <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/chat" element={<Chat email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+            <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

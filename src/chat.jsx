@@ -81,9 +81,11 @@ const Chat = (props) => {
 
                     </div>
                     <span style={{ marginTop: '150px' }} ref={scroll}></span>
-                    <Box fullWidth component="div" sx={{ display: 'flex', flexDirection: 'row', gap: 2, position: 'fixed', width: { md: 'calc(100% - 300px)', xs: '90%' }, bottom: '25px' }}>
-                        <Input type="text" name="" fullWidth value={prompt} onChange={(ev) => setPrompt(ev.target.value)} />
-                        <Button color="success" onClick={onSend} scroll={scroll}> Send </Button>
+                    <Box sx={{ position: 'sticky', bottom: '-30px', left: '0', height: '80px', width: '100%', background: '#d5e5e5' }}>
+                        <Box fullWidth component="div" sx={{ background: '#d5e5e5', display: 'flex', flexDirection: 'row', gap: 2, position: 'fixed', width: { md: 'calc(100% - 300px)', xs: '90%' }, bottom: '25px' }}>
+                            <Input placeholder="Type in here…" size="lg" type=" text" name="" fullWidth value={prompt} onChange={(ev) => setPrompt(ev.target.value)} />
+                            <Button color="success" onClick={onSend} scroll={scroll}> Send </Button>
+                        </Box>
                     </Box>
                 </Box>
 

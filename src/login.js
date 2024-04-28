@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from './Resources/Logo.jpg'
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebase';
 import Alert from '@mui/joy/Alert';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import Box from '@mui/joy/Box';
@@ -38,7 +36,6 @@ const Login = (props) => {
     login(email, password)
       .then(() => {
         alert(`Sign-in Successful | Welcome ${email}`)
-        props.setEmail(email)
         navigate("/")
       })
       .catch((error) => {
