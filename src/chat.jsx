@@ -1,6 +1,6 @@
 import DashboardTemplate from './Dashboard/DashboardTemplate'
 import Sidebar from './Dashboard/components/SIdebar'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import CssBaseline from '@mui/joy/CssBaseline';
 import { useNavigate } from 'react-router-dom'
 import { Box, Card, Input, TextField, Typography } from '@mui/joy'
@@ -8,18 +8,22 @@ import Button from '@mui/joy/Button';
 import Stack from '@mui/joy/Stack';
 import Message from './Message';
 import Header from './Dashboard/components/Header';
-//import logo from 'logo.png'
+import AuthContext from './AuthContext';
+
 
 
 
 const Chat = (props) => {
+    const { user } = useContext(AuthContext)
+
+
     const [messages, setMessages] = useState([{
-        id: 1, name: 'Wajeeh', uid: 'wajeeh', text: "Hello"
+        id: 1, name: 'Wajeeh', uid: user.email, text: "Hello"
     }, {
         id: 2, name: 'WellNestX', uid: 'ai', text: "Hello, How are you?"
     },
     {
-        id: 3, name: 'Wajeeh', uid: 'wajeeh', text: "I'm good!!"
+        id: 3, name: 'Wajeeh', uid: user.email, text: "I'm good!!"
     }]);
 
 
@@ -29,7 +33,7 @@ const Chat = (props) => {
         if (prompt) {
             const msgarr = messages;
             const thisMessage = {
-                id: 1, name: 'Wajeeh', uid: 'wajeeh', text: prompt
+                id: 1, name: 'Wajeeh', uid: user.email, text: prompt
             }
             msgarr.push(thisMessage);
             setMessages(msgarr);
@@ -67,7 +71,7 @@ const Chat = (props) => {
                         minWidth: 0,
                         height: '100dvh',
                         gap: 3,
-                        overflow: 'auto',
+                        overflow: 'scroll',
                         justifyContent: 'space-between',
                         alignItems: 'flex-start',
                         alignContent: 'flex-start',
