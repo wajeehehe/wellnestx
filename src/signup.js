@@ -18,6 +18,12 @@ import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
 import AuthContext from './AuthContext';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from './firebase';
+
+
+
+
 
 
 
@@ -30,6 +36,7 @@ const SignUp = (props) => {
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [fullName, setFullName] = useState("");
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const { user, logout } = useContext(AuthContext)
   const navigate = useNavigate()
@@ -44,9 +51,11 @@ const SignUp = (props) => {
     }
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+
         // Signed in
         const user = userCredential.user;
         console.log(user);
+        addToDB()
         alert(`Sign up Successful, please login with your credentials : ${user.email}`)
         navigate("/login")
         // ...
@@ -59,6 +68,20 @@ const SignUp = (props) => {
         const errorMessage = error.message;
         // ..
       });
+  }
+
+
+  const addToDB = async (fname) => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        'fName': { fullName },
+        'email': { email }
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+
   }
 
   if (!user) {
@@ -167,6 +190,11 @@ const SignUp = (props) => {
                   <FormControl required>
                     <FormLabel>Password</FormLabel>
                     <Input type={showPassword ? "text" : "password"} name="password" value={password} onChange={(ev) => setPassword(ev.target.value)}
+                    />
+                  </FormControl>
+                  <FormControl required>
+                    <FormLabel>Full Name</FormLabel>
+                    <Input type="text" name="fullName" value={fullName} onChange={(ev) => setFullName(ev.target.value)}
                     />
                   </FormControl>
                   {passwordError ? <Alert variant="outlined" color="danger">{passwordError}</Alert> : ""}

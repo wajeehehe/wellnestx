@@ -18,7 +18,7 @@ const Chat = (props) => {
 
 
     const [messages, setMessages] = useState([{
-        id: 1, name: 'Wajeeh', uid: user.email, text: "Hello"
+        id: 1, name: 'Wajeeh', uid: user.email ? user.email : 'test@gmail.com', text: "Hello"
     }, {
         id: 2, name: 'WellNestX', uid: 'ai', text: "Hello, How are you?"
     },

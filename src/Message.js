@@ -19,7 +19,7 @@ const Message = ({ message }) => {
         return initials
     }
 
-
+    console.log(message.uid, user.email)
     return (
         <div
             style={{
