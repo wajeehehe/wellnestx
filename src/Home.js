@@ -14,6 +14,7 @@ import AuthContext from './AuthContext';
 const Home = (props) => {
   const { user } = useContext(AuthContext)
   const [name, setName] = useState("Wajeehehe")
+  //This is done by wajeeh
 
 
 
