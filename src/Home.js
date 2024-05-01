@@ -8,6 +8,9 @@ import Header from './Dashboard/components/Header';
 import Button from '@mui/joy/Button';
 import Stack from '@mui/joy/Stack';
 import logo from './Resources/Logo.jpg'
+import Input from '@mui/joy/Input';
+import SearchIcon from '@mui/icons-material/Search';
+
 //import logo from 'logo.png'
 
 
@@ -24,7 +27,9 @@ const Home = (props) => {
     <div disableTransitionOnChange>
       <CssBaseline />
       <Box sx={{ display: 'flex', minHeight: '100dvh', background: '#D5E5E5' }}>
+
         <Sidebar name="Full Name" />
+
         <Header />
         <Box
           component="main"
@@ -46,14 +51,23 @@ const Home = (props) => {
             flexWrap: 'wrap'
           }}
         >
-          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
-          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
-          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
-          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '25px', justifyContent: 'space-between', alignItems: 'center', padding: '15px', width: '100%', position: 'sticky', top: '0', height: '100px' }}>
+            <Typography level='h2' sx={{ color: 'red' }}>WELCOME</Typography>
+            <Box sx={{ width: { xs: '100%', md: '30%' } }}> <Input
+              startDecorator={<SearchIcon color='success' />}
+              color="success"
+              placeholder="Search anything.."
+              size="lg"
+              variant="outlined"
+              sx={{ borderRadius: '18px' }}
+            /> </Box>
+          </Box>
 
-          {/* <MyProfile /> */}
+
         </Box>
+
       </Box>
+
     </div >
   );
 }
