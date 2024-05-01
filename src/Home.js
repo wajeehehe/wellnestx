@@ -1,35 +1,49 @@
 import DashboardTemplate from './Dashboard/DashboardTemplate'
 import Sidebar from './Dashboard/components/SIdebar'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import CssBaseline from '@mui/joy/CssBaseline';
 import { useNavigate } from 'react-router-dom'
 import { AspectRatio, Box, Card, Typography } from '@mui/joy'
 import Header from './Dashboard/components/Header';
+<<<<<<< HEAD
 import Button from '@mui/joy/Button';
 import Stack from '@mui/joy/Stack';
 import logo from './Resources/Logo.jpg'
 import Input from '@mui/joy/Input';
 import SearchIcon from '@mui/icons-material/Search';
+=======
+import AuthContext from './AuthContext';
+>>>>>>> 1ecd36f6bd6b2594403235f00484192cf37561fb
 
 //import logo from 'logo.png'
 
 
 
 const Home = (props) => {
+  const { user } = useContext(AuthContext)
   const [name, setName] = useState("Wajeehehe")
+  //This is done by wajeeh
+
+
+
   let navigate = useNavigate();
   const cards = {
     minWidth: '150px', aspectRatio: { md: '1.2/1', xs: 'unset' }, width: { lg: '24%', md: '24%', xs: '100%' }, padding: 5, minHeight: 200, display: 'flex', justifyContent: 'center',
     alignItems: 'center'
   };
 
+
   return (
-    <div disableTransitionOnChange>
+    <div>
       <CssBaseline />
       <Box sx={{ display: 'flex', minHeight: '100dvh', background: '#D5E5E5' }}>
+<<<<<<< HEAD
 
         <Sidebar name="Full Name" />
 
+=======
+        <Sidebar />
+>>>>>>> 1ecd36f6bd6b2594403235f00484192cf37561fb
         <Header />
         <Box
           component="main"
@@ -51,6 +65,7 @@ const Home = (props) => {
             flexWrap: 'wrap'
           }}
         >
+<<<<<<< HEAD
           <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '25px', justifyContent: 'space-between', alignItems: 'center', padding: '15px', width: '100%', position: 'sticky', top: '0', height: '100px' }}>
             <Typography level='h2' sx={{ color: 'red' }}>WELCOME</Typography>
             <Box sx={{ width: { xs: '100%', md: '30%' } }}> <Input
@@ -63,6 +78,12 @@ const Home = (props) => {
             /> </Box>
           </Box>
 
+=======
+          <Card sx={cards}>Hello {name ? name : "Laiba"}</Card>
+          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
+          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
+          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
+>>>>>>> 1ecd36f6bd6b2594403235f00484192cf37561fb
 
         </Box>
 

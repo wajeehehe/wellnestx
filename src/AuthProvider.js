@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState("null");
+    const [userType, setUserType] = useState("user")
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -19,6 +20,8 @@ const AuthProvider = ({ children }) => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             setUser(userCredential.user);
+            //send req to api with email, response doctor or not?
+
             return Promise.resolve();
         } catch (error) {
             console.error(error)
