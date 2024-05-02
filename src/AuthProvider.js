@@ -1,13 +1,15 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { auth } from './firebase';
+import { auth, db } from './firebase';
 import AuthContext from './AuthContext';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState("null");
-    const [userType, setUserType] = useState("user")
+    const [userData, setUserData] = useState("null");
 
+    const userDoc = collection(db, "users")
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((currentUser) => {
             setUser(currentUser);
@@ -18,16 +20,18 @@ const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const userCredential = await signInWithEmailAndPassword(auth, email, password)
             setUser(userCredential.user);
-            //send req to api with email, response doctor or not?
+            const q = query(userDoc, where("email", "==", user.email));
+            getUserDatafromDB(q)
+
+
 
             return Promise.resolve();
-        } catch (error) {
+        }
+        catch (error) {
             console.error(error)
             return Promise.reject(error);
-
-            // Handle login errors (display error messages, etc.)   
         }
     };
 
@@ -41,8 +45,15 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const getUserDatafromDB = async (q) => {
+        const querySnapshot = await getDocs(q);
+        setUserData(querySnapshot.docs[0].data());
+        if (userData != "null")
+            localStorage.setItem('userData', JSON.stringify(userData));
+    }
+
     return (
-        <AuthContext.Provider value={{ user, setUser, login, logout }}>
+        <AuthContext.Provider value={{ user, userData, setUser, setUserData, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

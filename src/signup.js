@@ -44,11 +44,16 @@ const SignUp = (props) => {
 
 
   const onSignup = async (e) => {
+
     e.preventDefault()
     if (password.length < 6) {
       setPasswordError('Password must be more than 6 characters');
       return
     }
+
+    setEmail(email.toLowerCase())
+    console.log(email)
+
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
 
@@ -71,11 +76,12 @@ const SignUp = (props) => {
   }
 
 
-  const addToDB = async (fname) => {
+  const addToDB = async () => {
+    setEmail(email.toLowerCase())
     try {
       const docRef = await addDoc(collection(db, "users"), {
-        'fName': { fullName },
-        'email': { email }
+        fullName,
+        email
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -184,7 +190,7 @@ const SignUp = (props) => {
                 >
                   <FormControl required>
                     <FormLabel>Email</FormLabel>
-                    <Input type="email" name="email" value={email} onChange={(ev) => setEmail(ev.target.value)} />
+                    <Input type="email" name="email" value={email} onChange={(ev) => setEmail(ev.target.value.toLowerCase())} />
                   </FormControl>
                   {emailError ? <Alert variant="outlined" color="danger">{emailError}</Alert> : ""}
                   <FormControl required>

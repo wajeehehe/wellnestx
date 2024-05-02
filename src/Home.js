@@ -1,26 +1,36 @@
 import DashboardTemplate from './Dashboard/DashboardTemplate'
 import Sidebar from './Dashboard/components/SIdebar'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CssBaseline from '@mui/joy/CssBaseline';
 import { useNavigate } from 'react-router-dom'
-import { AspectRatio, Box, Card, Typography } from '@mui/joy'
+import { Box, Card, Typography } from '@mui/joy'
 import Header from './Dashboard/components/Header';
 import AuthContext from './AuthContext';
 import Input from '@mui/joy/Input';
 import SearchIcon from '@mui/icons-material/Search';
-import { db } from './firebase';
-
-//import logo from 'logo.png'
-
-
-import { collection, getDocs } from "firebase/firestore";
+import Button from '@mui/joy/Button';
 
 
 
-const Home = (props) => {
+
+
+
+
+
+const Home = () => {
   const { user } = useContext(AuthContext)
-  const [name, setName] = useState("")
+  const { userData, setUserData } = useContext(AuthContext)
+
+
   //This is done by wajeeh
+
+
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('userData');
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    }
+  }, [])
 
 
   let navigate = useNavigate();
@@ -33,14 +43,18 @@ const Home = (props) => {
   return (
     <div>
       <CssBaseline />
-      <Box sx={{ display: 'flex', minHeight: '100dvh', background: '#D5E5E5' }}>
+      <Box sx={{ display: 'flex', minHeight: '100dvh', background: 'transparent' }}>
 
         <Sidebar />
         <Header />
+
+
         <Box
           component="main"
           className="MainContent"
           sx={{
+            backdropFilter: 'blur(22px)',
+            background: "#D5E5E5fa",
             pt: { xs: 'calc(25px + var(--Header-height)) !important', md: 3 },
             padding: { xs: 2, sm: 2, md: 3 },
             flex: 1,
@@ -59,39 +73,55 @@ const Home = (props) => {
         >
 
           <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '25px', justifyContent: 'space-between', alignItems: 'center', padding: '15px', width: '100%', position: 'sticky', top: '0', height: '100px' }}>
-            <Typography level='h2' sx={{ color: 'red' }}>WELCOME { }</Typography>
+            <Typography level='h1' sx={{ color: '#2E7D32dd' }}>Welcome {userData.fullName ? userData.fullName : "Laiba"} !</Typography>
             <Box sx={{ width: { xs: '100%', md: '30%' } }}> <Input
               startDecorator={<SearchIcon color='success' />}
-              color="success"
+              color=""
               placeholder="Search anything.."
               size="lg"
               variant="outlined"
-              sx={{ borderRadius: '18px' }}
             /> </Box>
           </Box>
 
 
-          <Card sx={cards}>Hello {name ? name : "Laiba"}</Card>
-          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
-          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
-          <Card sx={cards}>Hello {name ? name : "Wajeeh"}</Card>
+          <Card sx={cards}>Hello</Card>
+          <Card sx={cards}>Hello </Card>
+          <Card sx={cards}>Hello </Card>
+          <Card sx={cards}>Hello </Card>
+          <Button onClick={() => console.log(userData, user)}></Button>
 
         </Box >
 
-      </Box >
-
+      </Box>
+      <Box
+        sx={(theme) => ({
+          height: '100%',
+          width: '100%',
+          position: 'fixed',
+          right: 0,
+          top: 0,
+          bottom: 0,
+          left: 0,
+          zIndex: -5,
+          transition:
+            'background-image var(--Transition-duration), left var(--Transition-duration) !important',
+          transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
+          backgroundColor: 'background.level1',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundImage:
+            'url(https://t3.ftcdn.net/jpg/05/87/64/16/360_F_587641642_GnVhXpvkKtqMWtAutjqq5gMQznlOwOh7.jpg)',
+          [theme.getColorSchemeSelector('dark')]: {
+            backgroundImage:
+              'url(https://images.unsplash.com/photo-1572072393749-3ca9c8ea0831?auto=format&w=1000&dpr=2)',
+          },
+        })}
+      />
     </div >
   );
 }
 
-const getData = async (userEmail) => {
-  const querySnapshot = await getDocs(collection(db, "users"));
-  querySnapshot.forEach((doc) => {
-    if (doc.data().email.email === userEmail);
-    console.log(doc.data())
-    return doc.data();
-  });
-}
 
 
 

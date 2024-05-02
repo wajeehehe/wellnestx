@@ -59,7 +59,7 @@ function Toggler({
 export default function Sidebar(props) {
   const { logout } = useContext(AuthContext);
 
-  const { user } = React.useContext(AuthContext)
+  const { user, userData } = React.useContext(AuthContext)
   return (
     <Sheet
       className="Sidebar"
@@ -287,7 +287,7 @@ export default function Sidebar(props) {
           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">"Full Name"</Typography>
+          <Typography level="title-sm">{userData.fullName}</Typography>
           <Typography level="body-xs">{user.email}</Typography>
         </Box>
         <IconButton size="sm" variant="plain" color="neutral" onClick={logout}>
