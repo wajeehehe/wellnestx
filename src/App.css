@@ -7,10 +7,54 @@
   pointer-events: none;
 }
 
+.doctorsList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.doctorsList li {
+  padding: 10px 15px;
+  margin: 10px 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 25px 0 #0002;
+  text-transform: capitalize;
+  transition: 0.2s ease;
+}
+
+.doctorsList li:hover {
+  cursor: pointer;
+  transform: scale(0.96);
+  box-shadow: 0 0 15px 1px #0002;
+  text-transform: capitalize;
+}
+
+
+
+.doctor-popup * {
+  margin: 0;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popup-enter {
+  animation: fadeInUp 0.3s ease-in-out;
 }
 
 .App-header {
@@ -32,6 +76,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -88,7 +133,7 @@
 }
 
 
-.inputContainer > .errorLabel {
+.inputContainer>.errorLabel {
   color: red;
   font-size: 12px;
 }
@@ -102,55 +147,55 @@
   padding-left: 8px;
 }
 
-.mainBox{
+.mainBox {
   width: 900px;
   display: flex;
   flex-direction: row;
   column-gap: 0;
   box-shadow: 0 0 25px 0 #27272730;
   border-radius: 25px;
-   overflow: hidden;
+  overflow: hidden;
 
 }
 
-.mainBox > div{
+.mainBox>div {
   width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
- 
+
 
 }
 
-.mainBox >div.rightHalf{
+.mainBox>div.rightHalf {
   padding: 50px;
   box-sizing: border-box;
   background-color: #e4eaee;
 }
 
-.mainBox >div.leftHalf{
-background: url('https://images.squarespace-cdn.com/content/v1/58b7487fe58c62846e27aaee/1620723889244-0M6WBI1K4NHDV6FG4IMX/seedling2.jpg');
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center right;
-position: relative;
+.mainBox>div.leftHalf {
+  background: url('https://images.squarespace-cdn.com/content/v1/58b7487fe58c62846e27aaee/1620723889244-0M6WBI1K4NHDV6FG4IMX/seedling2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center right;
+  position: relative;
 }
 
 
-.mainBox >div.leftHalf::before{
- content: '';
- position: absolute;
- left: 0;
- top: 0;
- width: 100%;
- height: 100%;
- background-color: #02435580;
- mix-blend-mode: multiply;
+.mainBox>div.leftHalf::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #02435580;
+  mix-blend-mode: multiply;
 
-  }
+}
 
-.inputButton{
+.inputButton {
   height: 48px;
   width: 400px;
   background: #024355;
@@ -158,18 +203,18 @@ position: relative;
   border-radius: 8px;
 }
 
-.titleContainer div{
-  font-size:36px;
+.titleContainer div {
+  font-size: 36px;
   margin-bottom: 25px;
   font-weight: 800;
   color: #363636;
 }
 
-.inputContainer{
+.inputContainer {
   width: 85%;
 }
 
-.inputContainer input{
+.inputContainer input {
   width: 100%;
   box-sizing: border-box;
   border: 0;
@@ -181,7 +226,7 @@ position: relative;
   font-family: 'Montserrat';
 }
 
-.inputContainer input.inputButton{
+.inputContainer input.inputButton {
   background-color: teal;
   color: #fff;
   font-weight: 700;
@@ -191,7 +236,7 @@ position: relative;
 }
 
 
-.inputContainer input.inputButton:hover{
+.inputContainer input.inputButton:hover {
   background-color: rgb(2, 87, 87);
   color: #fff;
   font-weight: 700;
@@ -199,7 +244,7 @@ position: relative;
   cursor: pointer;
 }
 
-div > a{
+div>a {
   font-size: 13px;
   color: #4c4c4c;
   text-decoration: underline;
@@ -211,9 +256,8 @@ div > a{
   max-height: 150px;
 }
 
-.logoContainer img{
+.logoContainer img {
   height: 100%;
   width: 100%;
   object-fit: contain;
 }
-

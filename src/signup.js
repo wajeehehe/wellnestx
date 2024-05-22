@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import logo from './Resources/Logo.jpg'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
-import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import CssBaseline from '@mui/joy/CssBaseline';
 import Box from '@mui/joy/Box';

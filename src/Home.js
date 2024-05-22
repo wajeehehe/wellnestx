@@ -9,20 +9,32 @@ import AuthContext from './AuthContext';
 import Input from '@mui/joy/Input';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/joy/Button';
-
-
-
-
-
+import { db } from './firebase.js';
+import DoctorsList from './DoctorsList.js';
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 
 
 const Home = () => {
   const { user } = useContext(AuthContext)
   const { userData, setUserData } = useContext(AuthContext)
+  const [showDoctorsList, setShowDoctorsList] = useState(false);
+  const [doctorSearchKeyword, setDoctorSearchKeyword] = useState();
+  const handleShowDoctorsList = () => {
+    setShowDoctorsList(!showDoctorsList);
+    if (showDoctorsList === false) {
+      setShowDoctorsList(true)
+    }
+    console.log(doctorSearchKeyword)
+
+  };
 
 
-  //This is done by wajeeh
+
+  const handleSearchChange = (event) => {
+    setDoctorSearchKeyword(event.target.value.toLowerCase()); // Lowercase for case-insensitive search
+  };
+
 
 
   useEffect(() => {
@@ -84,11 +96,22 @@ const Home = () => {
           </Box>
 
 
-          <Card sx={cards}>Hello</Card>
-          <Card sx={cards}>Hello </Card>
-          <Card sx={cards}>Hello </Card>
-          <Card sx={cards}>Hello </Card>
-          <Button onClick={() => console.log(userData, user)}></Button>
+
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Input
+              startDecorator={<SearchIcon color='success' />}
+              color=""
+              placeholder="Search for Doctors"
+              size="lg"
+              variant="outlined"
+              value={doctorSearchKeyword}
+              onChange={handleSearchChange}
+            />
+            <Button onClick={handleShowDoctorsList}>{showDoctorsList ? "Hide" : "Search"}</Button>
+            {showDoctorsList && <DoctorsList keyword={doctorSearchKeyword} />}
+          </Box>
+
 
         </Box >
 

@@ -1,0 +1,50 @@
+import React, { useState, useEffect } from 'react';
+import { collection, getDocs, query } from 'firebase/firestore';
+import { db } from './firebase'; // Replace with your Firebase import
+import DoctorPopup from './DoctorPopup';
+
+function DoctorList({ keyword }) {
+    const [doctors, setDoctors] = useState([]);
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
+
+    const handleDoctorClick = (doctor) => {
+        setSelectedDoctor(doctor);
+    };
+
+
+    useEffect(() => {
+        const getDoctorsData = async () => {
+            const doctorsCollection = collection(db, 'Doctors');
+            const querySnapshot = await getDocs(query(doctorsCollection));
+            const doctorList = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+            const filteredDoctors = doctorList.filter((doctor) =>
+                doctor.speciality.toLowerCase().includes(keyword) || doctor.name.toLowerCase().includes(keyword)
+            );
+            setDoctors(filteredDoctors);
+
+        };
+        getDoctorsData();
+
+    }, [keyword]);
+
+
+
+
+    if (doctors.length > 0)
+        return (
+            <ul className="doctorsList">
+                {doctors.map(doctor => (
+                    <li style={{ textTransform: 'capitalize' }} key={doctor.id} onClick={() => handleDoctorClick(doctor)} > {doctor.name} | {doctor.location} | {doctor.speciality}</li>
+                ))}
+                {selectedDoctor && <DoctorPopup doctor={selectedDoctor} onClose={() => setSelectedDoctor(null)} />}
+            </ul>
+        );
+
+    else {
+        return (
+            <p>No Doctors Found, please refine your search</p>
+        )
+    }
+}
+
+export default DoctorList;
