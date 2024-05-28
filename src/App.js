@@ -7,7 +7,7 @@ import Chat from './chat.jsx'
 import { useEffect, useState } from 'react'
 import AuthProvider from './AuthProvider.js'
 import PrivateRoute from './PrivateRoute.js'
-
+import AppointmentList from './test.js'
 
 
 
@@ -22,6 +22,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
+            <Route path="/test" element={<AppointmentList />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
