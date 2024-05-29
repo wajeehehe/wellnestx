@@ -21,17 +21,23 @@ const AppointmentList = () => {
             const querySnapshot = await getDocs(q);
             const appointmentList = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             setUnfilteredAppointments(appointmentList);
+            console.log("appointments")
         };
         getAppointmentsData();
-        // console.log(appointments)
+
     }, []);
 
     useEffect(() => {
-        const filteredAppointment = unfilteredappointments.filter((appointment) =>
-            appointment.DocID.toLowerCase().includes(keyword, unfilteredappointments) || appointment.PatientID.toLowerCase().includes(keyword, unfilteredappointments)
-        );
-        setFilteredAppointments(filteredAppointment);
-
+        if (keyword) {
+            const filteredAppointment = unfilteredappointments.filter((appointment) =>
+                appointment.DocID.toLowerCase().includes(keyword) || appointment.PatientID.toLowerCase().includes(keyword)
+            );
+            setFilteredAppointments(filteredAppointment);
+        }
+        else {
+            setFilteredAppointments(unfilteredappointments);
+        }
+        console.log("Filtered")
         //getFilteredAppointments();
 
     }, [keyword, unfilteredappointments]);
@@ -53,7 +59,7 @@ const AppointmentList = () => {
                     </li>
                 ))}
             </ul>
-            {(filteredAppointments.lenght > 0) ? " " : <p>No appointments found</p>}
+            {(filteredAppointments.length > 0) ? " " : <p>No appointments found</p>}
         </div>
     );
 }

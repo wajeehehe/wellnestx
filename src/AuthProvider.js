@@ -24,9 +24,6 @@ const AuthProvider = ({ children }) => {
             setUser(userCredential.user);
             const q = query(userDoc, where("email", "==", user.email));
             getUserDatafromDB(q)
-
-
-
             return Promise.resolve();
         }
         catch (error) {
