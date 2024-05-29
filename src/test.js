@@ -10,6 +10,9 @@ const AppointmentList = () => {
     const [unfilteredappointments, setUnfilteredAppointments] = useState([]);
     const [keyword, setKeyword] = useState();
     const [timeSlots, setTimeSlots] = useState([
+        { time: 12, available: true },
+        { time: 13, available: true },
+        { time: 14, available: true },
         { time: 15, available: true },
         { time: 16, available: true },
         { time: 17, available: true },
@@ -45,11 +48,14 @@ const AppointmentList = () => {
             const filteredAppointment = unfilteredappointments.filter((appointment) =>
                 appointment.DocID.toLowerCase().includes(keyword) || appointment.PatientID.toLowerCase().includes(keyword)
             );
+            console.log(filteredAppointment)
             // setFilteredAppointments(filteredAppointment);
             const updatedTimeSlots = timeSlots.map((timeSlot) => {
-                const isBooked = filteredAppointment.some((appointment) => appointment.Time == timeSlot.time);
+                let isBooked = false;
+                isBooked = ((filteredAppointment.length > 0) ? filteredAppointment.some((appointment) => appointment.Time == timeSlot.time) : false);
 
-                console.log(timeSlot.time);
+
+
                 return { ...timeSlot, available: !isBooked };
             });
 
@@ -79,12 +85,25 @@ const AppointmentList = () => {
                     <li key={appointment.id}>
                         {/* Display appointment details */}
                         {appointment.date} May | {appointment.Time} PM | Dr ID. {appointment.DocID} | Pt ID.  {appointment.PatientID} |
-                        {(timeSlots.time)?.available ? "Available" : "Unavailable"}
+
 
                     </li>
                 ))}
             </ul>
+            <hr></hr>
             {(filteredAppointments.length > 0) ? " " : <p>No appointments found</p>}
+
+
+            <ul className="doctorsList" style={{ maxWidth: '500px', margin: 'autonpm' }}>
+                {timeSlots.map((timeSlot) => (
+
+                    <li key={timeSlot.id} style={{ backgroundColor: (timeSlot.available) ? "white" : "gray" }}>
+                        {timeSlot.time} |
+                        {(timeSlot.available) ? "Available" : "Unavailable"}
+
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
