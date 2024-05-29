@@ -4,6 +4,7 @@ import { db } from './firebase'; // Replace with your Firebase import
 import DoctorPopup from './DoctorPopup';
 
 function DoctorList({ keyword }) {
+    const [unfilteredDoctors, setUnfilteredDoctors] = useState([]);
     const [doctors, setDoctors] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState(null);
 
@@ -17,17 +18,20 @@ function DoctorList({ keyword }) {
             const doctorsCollection = collection(db, 'Doctors');
             const querySnapshot = await getDocs(query(doctorsCollection));
             const doctorList = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-            const filteredDoctors = doctorList.filter((doctor) =>
-                doctor.speciality.toLowerCase().includes(keyword) || doctor.name.toLowerCase().includes(keyword)
-            );
-            setDoctors(filteredDoctors);
-
+            setUnfilteredDoctors(doctorList);
+            console.log("Sending API Req");
         };
         getDoctorsData();
 
-    }, [keyword]);
+    }, []);
 
-
+    useEffect(() => {
+        const filteredDoctors = unfilteredDoctors.filter((doctor) =>
+            doctor.speciality.toLowerCase().includes(keyword) || doctor.name.toLowerCase().includes(keyword)
+        );
+        setDoctors(filteredDoctors);
+        console.log("Filtering")
+    }, [keyword, unfilteredDoctors]);
 
 
     if (doctors.length > 0)
