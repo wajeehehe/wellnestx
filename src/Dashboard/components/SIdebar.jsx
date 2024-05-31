@@ -64,6 +64,8 @@ export default function Sidebar(props) {
     <Sheet
       className="Sidebar"
       sx={{
+        boxSizing: 'border-box',
+        maxHeight: '100dvh',
         boxShadow: '0 0 35px 0 #0002',
         position: { xs: 'fixed', md: 'sticky' },
         transform: {
