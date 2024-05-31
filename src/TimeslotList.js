@@ -5,10 +5,10 @@ import Input from '@mui/joy/Input';
 
 
 
-const AppointmentList = () => {
+const TimeslotList = (props) => {
     const [filteredAppointments, setFilteredAppointments] = useState([]);
     const [unfilteredappointments, setUnfilteredAppointments] = useState([]);
-    const [keyword, setKeyword] = useState();
+    const [keyword, setKeyword] = useState(props.docid);
     const [timeSlots, setTimeSlots] = useState([
         { time: 12, available: true },
         { time: 13, available: true },
@@ -77,13 +77,12 @@ const AppointmentList = () => {
         <div>
             <Input
                 value={keyword}
-                onChange={handleSearchChange} />
+            />
 
-            <ul className="doctorsList" style={{ maxWidth: '500px', margin: 'autonpm' }}>
+            {/* <ul className="doctorsList" style={{ maxWidth: '500px', margin: 'autonpm' }}>
                 {filteredAppointments.map((appointment) => (
 
                     <li key={appointment.id}>
-                        {/* Display appointment details */}
                         {appointment.date} May | {appointment.Time} PM | Dr ID. {appointment.DocID} | Pt ID.  {appointment.PatientID} |
 
 
@@ -91,15 +90,18 @@ const AppointmentList = () => {
                 ))}
             </ul>
             <hr></hr>
-            {(filteredAppointments.length > 0) ? " " : <p>No appointments found</p>}
+            {(filteredAppointments.length > 0) ? " " : <p>No appointments found</p>} */}
 
 
-            <ul className="doctorsList" style={{ maxWidth: '500px', margin: 'autonpm' }}>
+            <ul className="doctorsList" style={{ margin: 'auto', display: 'flex', flexDirection: 'row', gap: 10 }}>
                 {timeSlots.map((timeSlot) => (
 
-                    <li key={timeSlot.id} style={{ backgroundColor: (timeSlot.available) ? "white" : "gray" }}>
-                        {timeSlot.time} |
-                        {(timeSlot.available) ? "Available" : "Unavailable"}
+                    <li key={timeSlot.id} style={{
+                        display: 'flex',
+                        aspectRatio: '1/1', flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+                        backgroundColor: (timeSlot.available) ? "white" : "gray"
+                    }}>
+                        {(timeSlot.time > 12) ? Math.abs(timeSlot.time - 12) + " PM" : timeSlot.time + " AM"}
 
                     </li>
                 ))}
@@ -108,4 +110,4 @@ const AppointmentList = () => {
     );
 }
 
-export default AppointmentList
+export default TimeslotList

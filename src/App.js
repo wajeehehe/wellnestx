@@ -3,11 +3,11 @@ import Home from './Home'
 import Login from './login.js'
 import SignUp from './signup.js'
 import './App.css'
-import Chat from './chat.jsx'
+import Chat from './chat.js'
 import { useEffect, useState } from 'react'
 import AuthProvider from './AuthProvider.js'
 import PrivateRoute from './PrivateRoute.js'
-import AppointmentList from './test.js'
+import TimeslotList from './TimeslotList.js'
 
 
 
@@ -22,7 +22,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
-            <Route path="/test" element={<AppointmentList />} />
+            <Route path="/test" element={<TimeslotList />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
