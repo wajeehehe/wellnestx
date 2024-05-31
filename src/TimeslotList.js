@@ -9,6 +9,7 @@ const TimeslotList = (props) => {
     const [filteredAppointments, setFilteredAppointments] = useState([]);
     const [unfilteredappointments, setUnfilteredAppointments] = useState([]);
     const [keyword, setKeyword] = useState(props.docid);
+
     const [timeSlots, setTimeSlots] = useState([
         { time: 12, available: true },
         { time: 13, available: true },
@@ -46,13 +47,13 @@ const TimeslotList = (props) => {
     useEffect(() => {
         if (keyword) {
             const filteredAppointment = unfilteredappointments.filter((appointment) =>
-                appointment.DocID.toLowerCase().includes(keyword) || appointment.PatientID.toLowerCase().includes(keyword)
+                appointment.docid.toLowerCase().includes(keyword) || appointment.patientid.toLowerCase().includes(keyword)
             );
             console.log(filteredAppointment)
             // setFilteredAppointments(filteredAppointment);
             const updatedTimeSlots = timeSlots.map((timeSlot) => {
                 let isBooked = false;
-                isBooked = ((filteredAppointment.length > 0) ? filteredAppointment.some((appointment) => appointment.Time == timeSlot.time) : false);
+                isBooked = ((filteredAppointment.length > 0) ? filteredAppointment.some((appointment) => appointment.time == timeSlot.time) : false);
 
 
 
@@ -101,8 +102,13 @@ const TimeslotList = (props) => {
                         aspectRatio: '1/1', flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
                         backgroundColor: (timeSlot.available) ? "white" : "gray"
                     }}>
-                        {(timeSlot.time > 12) ? Math.abs(timeSlot.time - 12) + " PM" : timeSlot.time + " AM"}
-
+                        {timeSlot.time === 24
+                            ? '12 AM'
+                            : timeSlot.time < 12
+                                ? `${timeSlot.time % 12 || 12} AM`
+                                : timeSlot.time === 12
+                                    ? '12 PM'
+                                    : `${timeSlot.time - 12} PM`}
                     </li>
                 ))}
             </ul>

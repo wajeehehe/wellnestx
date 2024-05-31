@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from './firebase'; // Replace with your Firebase import
 import DoctorPopup from './DoctorPopup';
+import Button from '@mui/joy/Button';
 
 function DoctorList({ keyword }) {
     const [unfilteredDoctors, setUnfilteredDoctors] = useState([]);
@@ -46,7 +47,10 @@ function DoctorList({ keyword }) {
 
     else {
         return (
-            <p>No Doctors Found, please refine your search</p>
+            //<p>No Doctors Found, please refine your search</p>//loading circle
+            <Button loading variant="plain">
+                Plain
+            </Button>
         )
     }
 }

@@ -10,16 +10,28 @@ import Message from './Message';
 import Header from './Dashboard/components/Header';
 import AuthContext from './AuthContext';
 import './chat.css'
+import DoctorList from './DoctorsList';
+import { collection, getDocs, query, where } from "@firebase/firestore";
+import { db } from './firebase';
+
+
 
 function Chat() {
     const [messages, setMessages] = useState([]); // Array to store messages
     const [userInput, setUserInput] = useState(''); // State for user input
     const messageListRef = useRef(null)
+
+    const [searchTerm, setSearchTerm] = useState('anxiety');
+
+
     const sendMessage = () => {
+        let doctorsearch = false;
         if (userInput.trim() === '') {
             return; // Prevent sending empty messages
         }
-
+        if (userInput.includes("doctor")) {
+            doctorsearch = true
+        }
         const newMessage = {
             sender: 'User',
             message: userInput,
@@ -29,12 +41,16 @@ function Chat() {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         setUserInput(''); // Clear user input after sending
 
+
+
         // Simulate AI response (hardcoded for now)
         const aiResponse = {
             sender: 'AI',
             message: 'This is a hardcoded AI response.',
             timestamp: new Date().toLocaleTimeString(),
+            showdoctor: doctorsearch
         };
+        doctorsearch = false;
         console.log(messages)
         setTimeout(() => {
             setMessages((prevMessages) => [...prevMessages, aiResponse]);
@@ -55,6 +71,7 @@ function Chat() {
         }
     };
 
+
     const messageList = messages.map((message) => (
         <div
             key={message.timestamp}
@@ -62,6 +79,9 @@ function Chat() {
         >
             <b>{message.sender}:</b> {message.message}
             <span className="timestamp">{message.timestamp}</span>
+            <div>
+                {(message.showdoctor) && message.sender === 'AI' ? <DoctorList keyword={searchTerm} /> : " "}
+            </div>
         </div>
     ));
 
@@ -104,12 +124,17 @@ function Chat() {
                         <input
                             type="text"
                             value={userInput}
-                            onChange={(event) => setUserInput(event.target.value)}
+                            onChange={(event) => {
+
+                                setUserInput(event.target.value);
+                            }}
                             onKeyPress={handleKeyPress}
                             placeholder="Type your message..."
                         />
                         <button onClick={sendMessage}>Send</button>
                     </div>
+
+
                 </div>
             </Box>
         </Box>
