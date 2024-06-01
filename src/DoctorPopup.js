@@ -33,7 +33,7 @@ function DoctorPopup({ doctor, onClose }) {
             <p style={{ textTransform: 'Capitalize' }}>{doctor.exp} Years of Experience</p>
             <p style={{ textTransform: 'Capitalize' }}>Speicalizes in {doctor.speciality}</p>
             <p style={{ textTransform: 'Capitalize' }}>{doctor.timings}</p>
-            <Box style={{ maxWidth: '100%', overflowX: 'scroll', padding: 5 }}><TimeslotList docid={doctor.docID} /></Box>
+            <Box style={{ maxWidth: '100%', overflowX: 'scroll', padding: 5 }}><TimeslotList doctor={doctor} patientid={1} popupClose={handleClose} /></Box>
             <Button onClick={handleClose}>Close</Button>
         </Card>
     );

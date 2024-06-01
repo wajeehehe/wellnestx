@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs, query, addDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import Input from '@mui/joy/Input';
 
@@ -8,7 +8,8 @@ import Input from '@mui/joy/Input';
 const TimeslotList = (props) => {
     const [filteredAppointments, setFilteredAppointments] = useState([]);
     const [unfilteredappointments, setUnfilteredAppointments] = useState([]);
-    const [keyword, setKeyword] = useState(props.docid);
+    const [docid, setDocid] = useState(props.doctor.docID);
+
 
     const [timeSlots, setTimeSlots] = useState([
         { time: 12, available: true },
@@ -26,28 +27,27 @@ const TimeslotList = (props) => {
         { time: 24, available: true },
     ]);
 
-    const handleSearchChange = (event) => {
-        setKeyword(event.target.value);
+    const getAppointmentsData = async () => {
+        const appointmentsCollection = collection(db, 'Appointments');
+        const q = query(appointmentsCollection);
+        const querySnapshot = await getDocs(q);
+        const appointmentList = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+        setUnfilteredAppointments(appointmentList);
+        console.log("appointments")
+
     };
 
     useEffect(() => {
-        const getAppointmentsData = async () => {
-            const appointmentsCollection = collection(db, 'Appointments');
-            const q = query(appointmentsCollection);
-            const querySnapshot = await getDocs(q);
-            const appointmentList = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-            setUnfilteredAppointments(appointmentList);
-            console.log("appointments")
 
-        };
         getAppointmentsData();
 
     }, []);
 
     useEffect(() => {
-        if (keyword) {
+        console.log(unfilteredappointments)
+        if (docid && (unfilteredappointments.length > 0)) {
             const filteredAppointment = unfilteredappointments.filter((appointment) =>
-                appointment.docid.toLowerCase().includes(keyword) || appointment.patientid.toLowerCase().includes(keyword)
+                appointment.docID.toLowerCase().includes(docid) || appointment.patientID.toLowerCase().includes(docid)
             );
             console.log(filteredAppointment)
             // setFilteredAppointments(filteredAppointment);
@@ -70,38 +70,69 @@ const TimeslotList = (props) => {
 
 
 
-    }, [keyword, unfilteredappointments]);
+    }, [docid, unfilteredappointments]);
+
+    const handleTimeSlotClick = (clickedTimeSlot) => {
+        if (clickedTimeSlot.available) {
+            console.log("booking in progress....");
+            createAppointment(clickedTimeSlot.time)
+        } else {
+            console.log("Time slot already booked!");
+        }
+    };
+
+    const createAppointment = async (selectedTime) => {
+        const newAppointment = {
+            docID: docid.toString(),
+            patientID: "1", // Hardcoded for now
+            date: 4, // Hardcoded for now
+            time: selectedTime,
+        };
+
+        punchAppointment(newAppointment);
+        getAppointmentsData();
+
+        const aiResponse = {
+            sender: 'AI',
+            message: `appoinment booked with ${props.doctor.name} at time ${newAppointment.time}`,
+            timestamp: new Date().toLocaleTimeString(),
+            showdoctor: false
+        };
+        console.log(aiResponse.message)
+        props.popupClose()
+    };
+    const punchAppointment = async (appointment) => {
+        try {
+            const appointmentsCollectionRef = collection(db, "Appointments");
+            const newAppointmentRef = await addDoc(appointmentsCollectionRef, appointment);
+            console.log("Appointment created with ID:", newAppointmentRef.id);
+        } catch (error) {
+            console.error("Error adding appointment:", error);
+
+        }
+    };
 
 
 
     return (
         <div>
             <Input
-                value={keyword}
+                value={docid}
+
             />
-
-            {/* <ul className="doctorsList" style={{ maxWidth: '500px', margin: 'autonpm' }}>
-                {filteredAppointments.map((appointment) => (
-
-                    <li key={appointment.id}>
-                        {appointment.date} May | {appointment.Time} PM | Dr ID. {appointment.DocID} | Pt ID.  {appointment.PatientID} |
-
-
-                    </li>
-                ))}
-            </ul>
-            <hr></hr>
-            {(filteredAppointments.length > 0) ? " " : <p>No appointments found</p>} */}
-
 
             <ul className="doctorsList" style={{ margin: 'auto', display: 'flex', flexDirection: 'row', gap: 10 }}>
                 {timeSlots.map((timeSlot) => (
 
                     <li key={timeSlot.id} style={{
                         display: 'flex',
-                        aspectRatio: '1/1', flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-                        backgroundColor: (timeSlot.available) ? "white" : "gray"
-                    }}>
+                        aspectRatio: '1/1',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: (timeSlot.available) ? 'white' : 'lightgray', // Visual cue for booked slots
+                        pointerEvents: (timeSlot.available) ? '' : 'none', // Disable interactions on booked slots
+                    }} onClick={() => handleTimeSlotClick(timeSlot)}>
                         {timeSlot.time === 24
                             ? '12 AM'
                             : timeSlot.time < 12

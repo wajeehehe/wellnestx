@@ -46,11 +46,12 @@ function Chat() {
         // Simulate AI response (hardcoded for now)
         const aiResponse = {
             sender: 'AI',
-            message: 'This is a hardcoded AI response.',
+            message: 'This is a hardcoded AI response. ',
             timestamp: new Date().toLocaleTimeString(),
             showdoctor: doctorsearch
         };
         doctorsearch = false;
+
         console.log(messages)
         setTimeout(() => {
             setMessages((prevMessages) => [...prevMessages, aiResponse]);
