@@ -6,17 +6,16 @@ import { useNavigate } from 'react-router-dom'
 import { Box, Card, Input, TextField, Typography } from '@mui/joy'
 import Button from '@mui/joy/Button';
 import Stack from '@mui/joy/Stack';
-import Message from './Message';
 import Header from './Dashboard/components/Header';
 import AuthContext from './AuthContext';
 import './chat.css'
 import DoctorList from './DoctorsList';
-import { collection, getDocs, query, where } from "@firebase/firestore";
-import { db } from './firebase';
-
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 function Chat() {
+    const genAI = new GoogleGenerativeAI('AIzaSyCNiF2GazkApUyMJgjWIEAQ1_QjjaPhqf8');
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const [messages, setMessages] = useState([]); // Array to store messages
     const [userInput, setUserInput] = useState(''); // State for user input
     const messageListRef = useRef(null)
@@ -24,7 +23,13 @@ function Chat() {
     const [searchTerm, setSearchTerm] = useState('anxiety');
 
 
-    const sendMessage = () => {
+    const aiRun = async (prompt) => {
+        const result = await model.generateContent("userPrompt:" + prompt + " / adminInstructions: act as a professional therapist. Do not recommend medicine, only home remedies");
+        const response = await result.response;
+        const text = response.text();
+        return (text);
+    }
+    const sendMessage = async () => {
         let doctorsearch = false;
         if (userInput.trim() === '') {
             return; // Prevent sending empty messages
@@ -40,13 +45,13 @@ function Chat() {
 
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         setUserInput(''); // Clear user input after sending
-
-
-
+        let aiResponseText = null;
+        if (!doctorsearch) { aiResponseText = await aiRun(userInput.toString()); }
+        else { aiResponseText = "Looking for doctors" }
         // Simulate AI response (hardcoded for now)
         const aiResponse = {
             sender: 'AI',
-            message: 'This is a hardcoded AI response. ',
+            message: aiResponseText ? aiResponseText : "Loading",
             timestamp: new Date().toLocaleTimeString(),
             showdoctor: doctorsearch
         };
@@ -56,7 +61,7 @@ function Chat() {
         setTimeout(() => {
             setMessages((prevMessages) => [...prevMessages, aiResponse]);
             console.log(messages)
-        }, 2000); // Simulate a 1-second delay
+        }, 1); // Simulate a 1-second delay
 
         console.log(messages)
         if (messageListRef.current) {
@@ -77,6 +82,7 @@ function Chat() {
         <div
             key={message.timestamp}
             className={`chat-bubble ${message.sender === 'User' ? 'user' : 'ai'}`}
+            style={{ maxWidth: '70%' }}
         >
             <b>{message.sender}:</b> {message.message}
             <span className="timestamp">{message.timestamp}</span>
