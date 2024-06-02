@@ -12,7 +12,6 @@ const TimeslotList = (props) => {
 
 
     const [timeSlots, setTimeSlots] = useState([
-        { time: 12, available: true },
         { time: 13, available: true },
         { time: 14, available: true },
         { time: 15, available: true },
@@ -24,7 +23,6 @@ const TimeslotList = (props) => {
         { time: 21, available: true },
         { time: 22, available: true },
         { time: 23, available: true },
-        { time: 24, available: true },
     ]);
 
     const getAppointmentsData = async () => {
@@ -76,6 +74,7 @@ const TimeslotList = (props) => {
         if (clickedTimeSlot.available) {
             console.log("booking in progress....");
             createAppointment(clickedTimeSlot.time)
+            props.appointmentBookedConfirmation(props.doctor, clickedTimeSlot)
         } else {
             console.log("Time slot already booked!");
         }

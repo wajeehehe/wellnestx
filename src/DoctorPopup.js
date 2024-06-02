@@ -3,7 +3,7 @@ import { Box, Card, Button } from "@mui/joy";
 import { useState, useEffect } from "react";
 import TimeslotList from "./TimeslotList";
 
-function DoctorPopup({ doctor, onClose }) {
+function DoctorPopup({ doctor, onClose, appointmentBookedConfirmation }) {
 
     const [isOpen, setIsOpen] = useState(false); // Track popup visibility
 
@@ -33,7 +33,7 @@ function DoctorPopup({ doctor, onClose }) {
             <p style={{ textTransform: 'Capitalize' }}>{doctor.exp} Years of Experience</p>
             <p style={{ textTransform: 'Capitalize' }}>Speicalizes in {doctor.speciality}</p>
             <p style={{ textTransform: 'Capitalize' }}>{doctor.timings}</p>
-            <Box style={{ maxWidth: '100%', overflowX: 'scroll', padding: 5 }}><TimeslotList doctor={doctor} patientid={1} popupClose={handleClose} /></Box>
+            <Box style={{ maxWidth: '100%', overflowX: 'scroll', padding: 5 }}><TimeslotList appointmentBookedConfirmation={appointmentBookedConfirmation} doctor={doctor} patientid={1} popupClose={handleClose} /></Box>
             <Button onClick={handleClose}>Close</Button>
         </Card>
     );

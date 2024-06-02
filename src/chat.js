@@ -21,13 +21,14 @@ function Chat() {
     const [messages, setMessages] = useState([]); // Array to store messages
     const [userInput, setUserInput] = useState(''); // State for user input
     const messageListRef = useRef(null)
+    const [inputFieldDisabled, setInputFieldDisabled] = useState(null)
     const [doctorSearchConfirmationActive, setDoctorSearchConfirmationActive] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [diagnosis, setDiagnosis] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const adminInstructions = {
         conversation: "act as a professional therapist and respond to the user. ur response should only contain the response text. Do not recommend medicine, only home remedies. Only talk about mental health, nothing else. Your name is WellnestX, but only tell when user asks. if the user talks about anything other than what you do to a therapist, kindly refuse and remind them that u are a mental health chatbot only.",
-        diagnosis: "based on the conversation with the user provide a single word diagnosis from this list [anxiety, depression, adhd]"
+        diagnosis: "based on the conversation with the user provide a single word diagnosis from this list [none, anxiety, depression, adhd]"
     }
     var Sentiment = require('sentiment');
     var sentiment = new Sentiment();
@@ -65,6 +66,21 @@ function Chat() {
 
 
     }
+    const capitalize = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    const appointmentBookedConfirmation = (doctor, appointment) => {
+
+        const aiResponse = {
+            sender: 'AI',
+            message: `Great! Your appointment is booked with Dr. ${capitalize(doctor.name)} at ${(appointment.time > 12) ? (appointment.time - 12) + 'PM' : appointment.time + 'AM'} today! `,
+            timestamp: new Date().toLocaleTimeString(),
+            showdoctor: 'pending'
+        };
+        setMessages((prevMessages) => [...prevMessages, aiResponse]);
+
+    }
+
 
     const doctorSearchConfirmation = () => {
         setDoctorSearchConfirmationActive(true)
@@ -79,7 +95,7 @@ function Chat() {
     }
 
     const searchDoctors = (confirmation) => {
-
+        setInputFieldDisabled(false);
         setDoctorSearchConfirmationActive(false)
         if (confirmation) {
             const aiResponseText = "Looking for doctors"
@@ -121,11 +137,15 @@ function Chat() {
         messageList.scrollTop = messageList.scrollHeight;
     };
     const sendMessage = async () => {
-        setIsLoading(true);
-        let doctorsearch = false;
-        if (userInput.trim() === '') {
+        setInputFieldDisabled(true);
+        if (userInput === '') {
             return;
         }
+
+        setIsLoading(true)
+
+        let doctorsearch = false;
+        handleScroll()
         const newMessage = {
             sender: 'User',
             message: userInput,
@@ -138,11 +158,11 @@ function Chat() {
         const textAnalysis = analyzeText(userInput);
 
         if (((textAnalysis.positive.includes('want') || textAnalysis.positive.includes('need')) && !textAnalysis.negative.includes('want') && textAnalysis.tokens.includes('doctor'))) {
-            setSearchTerm(await aiDiagnose(userInput))
+            setDiagnosis(await aiDiagnose(userInput))
             doctorSearchConfirmation();
             return
         }
-        setUserInput(''); // Clear user input after sending
+
         let aiResponseText = null;
         if (!doctorsearch) { aiResponseText = await aiRun(userInput.toString()); }
         console.log(aiResponseText)
@@ -163,13 +183,13 @@ function Chat() {
 
         const aiResponseAnalysis = analyzeText(aiResponseText);
         if (aiResponseAnalysis.tokens.includes('professional') || aiResponseAnalysis.tokens.includes('therapist')) {
-            console.log('needs doctor');
+            setDiagnosis(await aiDiagnose(userInput))
             setTimeout(() => {
                 doctorSearchConfirmation()
-            }, 5); // Simulate a 1-second delay
-
-        };
-
+            }, 5); // Simulate a 5-milisecond delay
+        }
+        setUserInput('');
+        setInputFieldDisabled(false);
         console.log(messages)
         if (messageListRef.current) {
             messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
@@ -194,7 +214,7 @@ function Chat() {
             <b>{message.sender == 'AI' ? "WellnestX" : "User"}</b> <AIMarkdown markdownText={message.message} />
             <span className="timestamp">{message.timestamp}</span>
             <div>
-                {(message.showdoctor === 'true') && message.sender === 'AI' ? <DoctorList keyword={searchTerm} /> : " "}
+                {(message.showdoctor === 'true') && message.sender === 'AI' ? <DoctorList keyword={diagnosis} appointmentBookedConfirmation={appointmentBookedConfirmation} /> : " "}
                 {(doctorSearchConfirmationActive) && (message.showdoctor === 'pending') && message.sender === 'AI' ? <><Button onClick={() => { message.showdoctor = 'false'; searchDoctors(true) }}>Yes</Button> <Button onClick={() => { message.showdoctor = 'false'; searchDoctors(false) }}>No</Button></> : " "}
             </div>
         </div>
@@ -237,24 +257,28 @@ function Chat() {
 
                     }}> <h1 style={{ fontSize: '72px', color: 'green', opacity: '0.9' }}>WellNestX</h1>
                         <ul onScroll={handleScroll} style={{ display: 'flex', flexDirection: 'column', paddingBottom: '45px' }}>{messageList}</ul>
+                        <div style={{ position: 'absolute', right: '25px', bottom: '25px', background: '#fff', padding: '25px' }}>Diagnosis : {diagnosis != '' ? diagnosis : 'None'} </div>
                         {isLoading && <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: 5 }}>  <Skeleton variant="rounded" width={'70%'} height={60} />
                             <Skeleton variant="rounded" width={'70%'} height={20} />
                             <Skeleton variant="rounded" width={'50%'} height={20} /></div>}
 
                     </div>
+
                     <div className="chat-input" style={{ display: 'center', justifyContent: 'center', gap: '25px', paddingBottom: '25px' }}>
                         <Input
+                            disabled={inputFieldDisabled}
                             sx={{ width: '85%' }}
                             type="text"
                             value={userInput}
                             onChange={(event) => {
 
                                 setUserInput(event.target.value);
+
                             }}
                             onKeyPress={handleKeyPress}
                             placeholder="Type your message..."
                         />
-                        <Button sx={{ width: '15%' }} onClick={sendMessage}>Send</Button>
+                        <Button disabled={inputFieldDisabled} sx={{ width: '15%' }} onClick={sendMessage}>Send</Button>
                     </div>
 
 

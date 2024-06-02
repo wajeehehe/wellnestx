@@ -4,7 +4,7 @@ import { db } from './firebase'; // Replace with your Firebase import
 import DoctorPopup from './DoctorPopup';
 import Button from '@mui/joy/Button';
 
-function DoctorList({ keyword }) {
+function DoctorList({ keyword, appointmentBookedConfirmation }) {
     const [unfilteredDoctors, setUnfilteredDoctors] = useState([]);
     const [doctors, setDoctors] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState(null);
@@ -44,7 +44,7 @@ function DoctorList({ keyword }) {
                 {doctors.map(doctor => (
                     <li style={{ textTransform: 'capitalize' }} key={doctor.id} onClick={() => handleDoctorClick(doctor)} > {doctor.name} | {doctor.location} | {doctor.speciality}</li>
                 ))}
-                {selectedDoctor && <DoctorPopup doctor={selectedDoctor} onClose={() => setSelectedDoctor(null)} />}
+                {selectedDoctor && <DoctorPopup appointmentBookedConfirmation={appointmentBookedConfirmation} doctor={selectedDoctor} onClose={() => setSelectedDoctor(null)} />}
             </ul>
         );
 
