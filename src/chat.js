@@ -127,7 +127,7 @@ function Chat() {
 
         const textAnalysis = analyzeText(userInput);
 
-        if ((textAnalysis.positive.includes('want') && !textAnalysis.negative.includes('want') && textAnalysis.tokens.includes('doctor'))) {
+        if (((textAnalysis.positive.includes('want') || textAnalysis.positive.includes('need')) && !textAnalysis.negative.includes('want') && textAnalysis.tokens.includes('doctor'))) {
             doctorSearchConfirmation();
             return
         }
