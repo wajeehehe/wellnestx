@@ -133,7 +133,7 @@ function Chat() {
         };
 
         setMessages((prevMessages) => [...prevMessages, newMessage]);
-        setUserInput(''); // Clear user input after sending
+
 
         const textAnalysis = analyzeText(userInput);
 
@@ -142,7 +142,7 @@ function Chat() {
             doctorSearchConfirmation();
             return
         }
-
+        setUserInput(''); // Clear user input after sending
         let aiResponseText = null;
         if (!doctorsearch) { aiResponseText = await aiRun(userInput.toString()); }
         console.log(aiResponseText)
