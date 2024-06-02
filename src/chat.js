@@ -22,7 +22,7 @@ function Chat() {
     const [doctorSearchConfirmationActive, setDoctorSearchConfirmationActive] = useState(false);
     const [searchTerm, setSearchTerm] = useState('anxiety');
     const adminInstructions = {
-        conversation: "act as a professional therapist. Do not recommend medicine, only home remedies. Only talk about mental health, nothing else. Your name is WellnestX, u can tell the user ur name.",
+        conversation: "act as a professional therapist and respond to the user. ur response should only contain the response text. Do not recommend medicine, only home remedies. Only talk about mental health, nothing else. Your name is WellnestX, but only tell when user asks",
         diagnosis: "based on the conversation with the user provide a single word diagnosis from this list [anxiety, depression, adhd]"
     }
     var Sentiment = require('sentiment');
