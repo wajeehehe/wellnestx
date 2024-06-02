@@ -13,6 +13,7 @@ import DoctorList from './DoctorsList';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Sentiment from 'sentiment';
 import AIMarkdown from './responseMarkdown';
+import Skeleton from '@mui/material/Skeleton';
 
 function Chat() {
     const genAI = new GoogleGenerativeAI('AIzaSyCNiF2GazkApUyMJgjWIEAQ1_QjjaPhqf8');
@@ -228,12 +229,13 @@ function Chat() {
                         paddingBottom: '100px'
 
                     }}><ul style={{ display: 'flex', flexDirection: 'column', paddingBottom: '45px' }}>{messageList}</ul>
-                        {isLoading && <div style={{ marginLeft: '10px' }}>  <Button loading variant="plain">
-                            Plain
-                        </Button></div>}
+                        {isLoading && <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: 5 }}>  <Skeleton variant="rounded" width={'70%'} height={60} />
+                            <Skeleton variant="rounded" width={'70%'} height={20} />
+                            <Skeleton variant="rounded" width={'50%'} height={20} /></div>}
                     </div>
-                    <div className="chat-input">
-                        <input
+                    <div className="chat-input" style={{ display: 'center', justifyContent: 'center', gap: '25px' }}>
+                        <Input
+                            sx={{ width: '85%' }}
                             type="text"
                             value={userInput}
                             onChange={(event) => {
@@ -243,7 +245,7 @@ function Chat() {
                             onKeyPress={handleKeyPress}
                             placeholder="Type your message..."
                         />
-                        <button onClick={sendMessage}>Send</button>
+                        <Button sx={{ width: '15%' }} onClick={sendMessage}>Send</Button>
                     </div>
 
 
