@@ -109,11 +109,17 @@ function Chat() {
             setTimeout(() => {
                 setMessages((prevMessages) => [...prevMessages, aiResponse]);
                 console.log(messages)
+
             }, 1); // Simulate a 1-second delay
         }
 
     }
+    const handleScroll = () => {
+        console.log(`scrolling`)
+        const messageList = messageListRef.current;
 
+        messageList.scrollTop = messageList.scrollHeight;
+    };
     const sendMessage = async () => {
         setIsLoading(true);
         let doctorsearch = false;
@@ -152,6 +158,7 @@ function Chat() {
             setMessages((prevMessages) => [...prevMessages, aiResponse]);
             console.log(messages)
             setIsLoading(false)
+            handleScroll()
         }, 1); // Simulate a 1-second delay
 
         const aiResponseAnalysis = analyzeText(aiResponseText);
@@ -222,17 +229,18 @@ function Chat() {
 
 
                 <div className="chat-container" style={{ maxWidth: '800px', margin: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
-                    <div style={{
+                    <div ref={messageListRef} style={{
                         overflowY: 'scroll',
                         margin: 'auto',
                         width: '100%',
                         paddingBottom: '100px'
 
                     }}> <h1 style={{ fontSize: '72px', color: 'green', opacity: '0.9' }}>WellNestX</h1>
-                        <ul style={{ display: 'flex', flexDirection: 'column', paddingBottom: '45px' }}>{messageList}</ul>
+                        <ul onScroll={handleScroll} style={{ display: 'flex', flexDirection: 'column', paddingBottom: '45px' }}>{messageList}</ul>
                         {isLoading && <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: 5 }}>  <Skeleton variant="rounded" width={'70%'} height={60} />
                             <Skeleton variant="rounded" width={'70%'} height={20} />
                             <Skeleton variant="rounded" width={'50%'} height={20} /></div>}
+
                     </div>
                     <div className="chat-input" style={{ display: 'center', justifyContent: 'center', gap: '25px', paddingBottom: '25px' }}>
                         <Input
