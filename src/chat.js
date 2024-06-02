@@ -1,6 +1,6 @@
 import DashboardTemplate from './Dashboard/DashboardTemplate'
 import Sidebar from './Dashboard/components/SIdebar'
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useRef, useContext, useEffect } from 'react'
 import CssBaseline from '@mui/joy/CssBaseline';
 import { useNavigate } from 'react-router-dom'
 import { Box, Card, Input, TextField, Typography } from '@mui/joy'
@@ -11,31 +11,110 @@ import AuthContext from './AuthContext';
 import './chat.css'
 import DoctorList from './DoctorsList';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-
+import Sentiment from 'sentiment';
 
 function Chat() {
     const genAI = new GoogleGenerativeAI('AIzaSyCNiF2GazkApUyMJgjWIEAQ1_QjjaPhqf8');
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
     const [messages, setMessages] = useState([]); // Array to store messages
     const [userInput, setUserInput] = useState(''); // State for user input
     const messageListRef = useRef(null)
-
+    const [doctorSearchConfirmationActive, setDoctorSearchConfirmationActive] = useState(false);
     const [searchTerm, setSearchTerm] = useState('anxiety');
+    const adminInstructions = {
+        conversation: "act as a professional therapist. Do not recommend medicine, only home remedies. Only talk about mental health, nothing else. Your name is WellnestX, u can tell the user ur name.",
+        diagnosis: "based on the conversation with the user provide a single word diagnosis from this list [anxiety, depression, adhd]"
+    }
+    var Sentiment = require('sentiment');
+    var sentiment = new Sentiment();
+
+    const analyzeText = (prompt) => {
+        var result = sentiment.analyze(prompt.toString());
+        console.dir(result);
+        return (result)
+    }
+
 
 
     const aiRun = async (prompt) => {
-        const result = await model.generateContent("userPrompt:" + prompt + " / adminInstructions: act as a professional therapist. Do not recommend medicine, only home remedies");
-        const response = await result.response;
-        const text = response.text();
-        return (text);
+        try {
+            const result = await model.generateContent("userPrompt:" + prompt + " / adminInstructions: " + adminInstructions.conversation);
+            const response = await result.response;
+            const text = response.text();
+            return (text);
+        }
+        catch (error) {
+            return ("The AI is currently unavailable")
+        }
     }
+    const aiDiagnose = async (prompt) => {
+        try {
+            const result = await model.generateContent("user prompt: " + prompt + "/ admin instruction: " + adminInstructions.diagnosis);
+            const response = await result.response;
+            const text = response.text();
+            console.log(text, text.trim)
+            return (text.trim());
+        }
+        catch (error) {
+            return ("The AI is currently unavailable")
+        }
+
+
+    }
+
+    const doctorSearchConfirmation = () => {
+        setDoctorSearchConfirmationActive(true)
+        const aiResponse = {
+            sender: 'AI',
+            message: "Do you want to talk to a doctor?",
+            timestamp: new Date().toLocaleTimeString(),
+            showdoctor: 'pending'
+        };
+        setMessages((prevMessages) => [...prevMessages, aiResponse]);
+
+    }
+
+    const searchDoctors = (confirmation) => {
+
+        setDoctorSearchConfirmationActive(false)
+        if (confirmation) {
+            const aiResponseText = "Looking for doctors"
+            const aiResponse = {
+                sender: 'AI',
+                message: aiResponseText ? aiResponseText : "Loading",
+                timestamp: new Date().toLocaleTimeString(),
+                showdoctor: 'true'
+            };
+
+
+            setTimeout(() => {
+                setMessages((prevMessages) => [...prevMessages, aiResponse]);
+                console.log(messages)
+            }, 1); // Simulate a 1-second delay
+        }
+        else {
+            const aiResponse = {
+                sender: 'AI',
+                message: "Okay, I understand you do not want to talk to a doctor, but incase you, please let me know :)",
+                timestamp: new Date().toLocaleTimeString(),
+                showdoctor: 'false'
+            };
+
+
+            setTimeout(() => {
+                setMessages((prevMessages) => [...prevMessages, aiResponse]);
+                console.log(messages)
+            }, 1); // Simulate a 1-second delay
+        }
+
+    }
+
     const sendMessage = async () => {
+        aiDiagnose(userInput)
+
         let doctorsearch = false;
         if (userInput.trim() === '') {
-            return; // Prevent sending empty messages
-        }
-        if (userInput.includes("doctor")) {
-            doctorsearch = true
+            return;
         }
         const newMessage = {
             sender: 'User',
@@ -45,23 +124,29 @@ function Chat() {
 
         setMessages((prevMessages) => [...prevMessages, newMessage]);
         setUserInput(''); // Clear user input after sending
+
+        const textAnalysis = analyzeText(userInput);
+
+        if ((textAnalysis.positive.includes('want') && !textAnalysis.negative.includes('want') && textAnalysis.tokens.includes('doctor'))) {
+            doctorSearchConfirmation();
+            return
+        }
+
         let aiResponseText = null;
         if (!doctorsearch) { aiResponseText = await aiRun(userInput.toString()); }
-        else { aiResponseText = "Looking for doctors" }
-        // Simulate AI response (hardcoded for now)
+
         const aiResponse = {
             sender: 'AI',
             message: aiResponseText ? aiResponseText : "Loading",
             timestamp: new Date().toLocaleTimeString(),
-            showdoctor: doctorsearch
+            showdoctor: 'false'
         };
-        doctorsearch = false;
 
-        console.log(messages)
         setTimeout(() => {
             setMessages((prevMessages) => [...prevMessages, aiResponse]);
             console.log(messages)
         }, 1); // Simulate a 1-second delay
+
 
         console.log(messages)
         if (messageListRef.current) {
@@ -80,14 +165,15 @@ function Chat() {
 
     const messageList = messages.map((message) => (
         <div
-            key={message.timestamp}
+            key={Math.random()}
             className={`chat-bubble ${message.sender === 'User' ? 'user' : 'ai'}`}
             style={{ maxWidth: '70%' }}
         >
             <b>{message.sender}:</b> {message.message}
             <span className="timestamp">{message.timestamp}</span>
             <div>
-                {(message.showdoctor) && message.sender === 'AI' ? <DoctorList keyword={searchTerm} /> : " "}
+                {(message.showdoctor === 'true') && message.sender === 'AI' ? <DoctorList keyword={searchTerm} /> : " "}
+                {(doctorSearchConfirmationActive) && (message.showdoctor === 'pending') && message.sender === 'AI' ? <><Button onClick={() => { message.showdoctor = 'false'; searchDoctors(true) }}>Yes</Button> <Button onClick={() => { message.showdoctor = 'false'; searchDoctors(false) }}>No</Button></> : " "}
             </div>
         </div>
     ));
