@@ -15,6 +15,9 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import IconButton from '@mui/material/IconButton'; // Import IconButton for arrows
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'; // Import ArrowBackIosIcon for previous slide
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'; // Import ArrowForwardIosIcon for next slide
+import SimpleSlider from './slider.js';
+
+
 //import care from './Resources/care.png'
 
 const Home = () => {
@@ -24,6 +27,11 @@ const Home = () => {
   const [doctorSearchKeyword, setDoctorSearchKeyword] = useState();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [tips, setTips] = useState([]); // Array to store fetched tips
+  const topicsList = [
+    { name: "Anxiety", slug: '/anxiety' },
+    { name: "Depression", slug: '/depression' },
+    { name: "Stress", slug: '/stress' },
+    { name: "Trauma", slug: '/trauma' }]
 
   const handleShowDoctorsList = () => {
     setShowDoctorsList(!showDoctorsList);
@@ -50,6 +58,7 @@ const Home = () => {
       const tipsSnapshot = await getDocs(tipsCollection);
       const fetchedTips = tipsSnapshot.docs.map((doc) => doc.data().text);
       setTips(fetchedTips);
+      console.log(tips)
     };
 
     fetchTips();
@@ -83,36 +92,17 @@ const Home = () => {
   };
 
   const cardStyle = {
-    aspectRatio: '1/1',
-    padding: '15px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
-    borderRadius: '4px',
     backgroundColor: '#bbea93',
     color: 'black',
+    boxShadow: '0 0 25px 0 #0001',
     transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
     margin: '10px',
-    maxWidth: '250px',
+    width: '250px',
+    borderRadius: '15px',
+    border: 0,
+    padding: '35px 15px'
   };
 
-  const handleCardHover = (event) => {
-    event.target.style.transform = 'scale(0.98)'; // Reduce size on hover
-    event.target.style.boxShadow = 'rgba(0, 0, 0, 0.3) 0px 4px 12px'; // Increase shadow on hover
-  };
-
-  const handleCardLeave = (event) => {
-    event.target.style.transform = 'scale(1)'; // Restore original size
-    event.target.style.boxShadow = 'rgba(0, 0, 0, 0.1) 0px 4px 12px'; // Restore original shadow
-  };
-
-  const exploreTopicsStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '20%', // 20% top margin from the slider
-  };
 
 
   return (
@@ -121,129 +111,87 @@ const Home = () => {
       <Box sx={{ display: 'flex', height: '100dvh', background: '#f5f5f5' }}>
         <Sidebar />
         <Header />
-        <Box
+        <Box //main
           component="main"
           className="MainContent"
           sx={{
+            boxSizing: 'border-box',
             backdropFilter: 'blur(22px)',
             pt: { xs: 'calc(25px + var(--Header-height)) !important', md: 3 },
             padding: { xs: 2, sm: 2, md: 3 },
             flex: 1,
             display: 'flex',
-            flexDirection: { md: 'row', xs: 'column' },
+            flexDirection: 'column',
             minWidth: 0,
             height: '100dvh',
             columnGap: 0,
             gap: { md: 1, xs: 3 },
             overflow: 'auto',
-            justifyContent: { md: 'space-evenly', xs: 'flex-start' },
+            justifyContent: { md: 'space-between', xs: 'flex-start' },
             alignItems: { md: 'flex-start', xs: 'center' },
             alignContent: 'flex-start',
-            flexWrap: 'wrap',
+            flexWrap: 'no-wrap',
 
           }}>
-          <Box sx={{//the hero section style (:'( ))
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-            background: '#2c554b',
-            color: '#f0f4f4',
-            padding: '10px 0px 0px 30px',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
+          <Box //Hero
+            sx={{//the hero section style (:'( ))
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              background: '#2c554b',
+              color: '#f0f4f4',
+              padding: { lg: '25px', md: '10px 25px' },
+              minHeight: { lg: '30dvh', md: '15dvh' },
+              borderRadius: '15px',
+              position: 'relative',
+              top: 0,
+              left: 0,
+              width: '100%',
 
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            textAlign: 'left',
-            zIndex: 1,
-          }}>
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+              textAlign: 'left',
+              zIndex: 1,
+            }}>
             <Typography level='h1' sx={{ color: '#f0f1f1' }}>Welcome {userData.fullName ? userData.fullName : "Laiba"} !</Typography>
             <Typography variant="h5" sx={{ color: '#f0f1f1', fontSize: '22px' }}>Great to have you on board!</Typography>
             <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px' }}>You're not alone :) Own your journey.</Typography>
+            <Input
+              sx={{ position: 'absolute', right: '25px', top: '25px' }}
+              startDecorator={<SearchIcon color='success' />}
+              color=""
+              placeholder="Search anything.."
+              size="lg"
+              variant="outlined"
 
-            <Box sx={{//style for the search bar
-              position: 'absolute',
-              top: '0',
-              right: '0',
-              display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              gap: '25px',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-start',
-              padding: '15px',
-              width: 'auto',
-              height: '100px'
-            }}>
-              <Box sx={{
-                display: 'flex',
-                flexGrow: 1,
-                width: '0',
-                margin: '10px 20px 0 0'
-              }}>
-                <Input
-                  startDecorator={<SearchIcon color='success' />}
-                  color=""
-                  placeholder="Search anything.."
-                  size="lg"
-                  variant="outlined"
+            />
 
-                />
-              </Box>
-            </Box>
 
           </Box>
+          <Box sx={{ width: '100%', overflow: 'hidden' }}>
+            <SimpleSlider data={tips} />
+          </Box>
 
+          <Box //Explore Topics
+            sx={{ display: 'flex', flexDirection: 'column', gap: 0, padding: '15px', width: '100%' }}
+          >
+            <h2 style={{ color: '#272727', marginBottom: '10px', fontFamily: 'Montserrat' }}>
+              Explore Topics
+            </h2>
+            <Box sx={{ display: 'flex', gap: '2px', justifyContent: 'center' }}>
+              {topicsList.map(topic => (
+                <Card sx={cardStyle} >
+                  < Typography variant="body1" sx={{ fontFamily: 'Montserrat', fontWeight: 'bold', color: '#272727dd' }}>{topic.name}</Typography>
+                </Card>
+              ))}
+            </Box>
+          </Box>
         </Box >
 
 
       </Box>
 
-      {tips.length > 0 && ( // Only display content if tips are fetched(i honestly dont know what tf is happening here)
-        <>
-          <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'center' }}>
-            <Box sx={{ position: 'absolute', top: '40%', left: '27%' }}>
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: '20px' }}>
-                <IconButton onClick={handlePrevSlide}>
-                  <ArrowBackIosIcon />
-                </IconButton>
-                <IconButton onClick={handleNextSlide}>
-                  <ArrowForwardIosIcon />
-                </IconButton>
-              </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: '80px' }}>
-                <Card sx={cards}>
-                  <Typography variant="h6" sx={{ fontSize: '18px' }} > {tips[currentSlide % tips.length]}</Typography>
-                </Card>
-                {tips.length > 1 && (
-                  <Card sx={cards}>
-                    <Typography variant="h6" sx={{ fontSize: '18px' }}>{tips[(currentSlide + 1) % tips.length]}</Typography>
-                  </Card>
-                )}
-              </Box>
-            </Box>
-          </Box>
-        </>
-      )
-      }
 
-      <Box sx={exploreTopicsStyle}>
-        <Typography variant="h6" sx={{ color: 'black', marginBottom: '10px' }}>
-          Explore Topics
-        </Typography>
-        <Box sx={{ display: 'flex', gap: '20px' }}>
-          <Card sx={cardStyle} onMouseEnter={handleCardHover} onMouseLeave={handleCardLeave}>
-            <Typography variant="body1">Anxiety</Typography>
-          </Card>
-          <Card sx={cardStyle} onMouseEnter={handleCardHover} onMouseLeave={handleCardLeave}>
-            <Typography variant="body1">Depression</Typography>
-          </Card>
-          <Card sx={cardStyle} onMouseEnter={handleCardHover} onMouseLeave={handleCardLeave}>
-            <Typography variant="body1">Stress</Typography>
-          </Card>
-        </Box>
-      </Box>
 
 
     </div >
