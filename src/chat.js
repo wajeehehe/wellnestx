@@ -12,6 +12,7 @@ import './chat.css'
 import DoctorList from './DoctorsList';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Sentiment from 'sentiment';
+import AIMarkdown from './responseMarkdown';
 
 function Chat() {
     const genAI = new GoogleGenerativeAI('AIzaSyCNiF2GazkApUyMJgjWIEAQ1_QjjaPhqf8');
@@ -20,9 +21,11 @@ function Chat() {
     const [userInput, setUserInput] = useState(''); // State for user input
     const messageListRef = useRef(null)
     const [doctorSearchConfirmationActive, setDoctorSearchConfirmationActive] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('anxiety');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [diagnosis, setDiagnosis] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     const adminInstructions = {
-        conversation: "act as a professional therapist and respond to the user. ur response should only contain the response text. Do not recommend medicine, only home remedies. Only talk about mental health, nothing else. Your name is WellnestX, but only tell when user asks",
+        conversation: "act as a professional therapist and respond to the user. ur response should only contain the response text. Do not recommend medicine, only home remedies. Only talk about mental health, nothing else. Your name is WellnestX, but only tell when user asks. if the user talks about anything other than what you do to a therapist, kindly refuse and remind them that u are a mental health chatbot only.",
         diagnosis: "based on the conversation with the user provide a single word diagnosis from this list [anxiety, depression, adhd]"
     }
     var Sentiment = require('sentiment');
@@ -90,6 +93,7 @@ function Chat() {
             setTimeout(() => {
                 setMessages((prevMessages) => [...prevMessages, aiResponse]);
                 console.log(messages)
+                setIsLoading(false)
             }, 1); // Simulate a 1-second delay
         }
         else {
@@ -110,8 +114,7 @@ function Chat() {
     }
 
     const sendMessage = async () => {
-        aiDiagnose(userInput)
-
+        setIsLoading(true);
         let doctorsearch = false;
         if (userInput.trim() === '') {
             return;
@@ -128,25 +131,36 @@ function Chat() {
         const textAnalysis = analyzeText(userInput);
 
         if (((textAnalysis.positive.includes('want') || textAnalysis.positive.includes('need')) && !textAnalysis.negative.includes('want') && textAnalysis.tokens.includes('doctor'))) {
+            setSearchTerm(await aiDiagnose(userInput))
             doctorSearchConfirmation();
             return
         }
 
         let aiResponseText = null;
         if (!doctorsearch) { aiResponseText = await aiRun(userInput.toString()); }
-
+        console.log(aiResponseText)
         const aiResponse = {
             sender: 'AI',
-            message: aiResponseText ? aiResponseText : "Loading",
+            message: aiResponseText.toString() ? aiResponseText : "Loading",
             timestamp: new Date().toLocaleTimeString(),
             showdoctor: 'false'
         };
 
+
         setTimeout(() => {
             setMessages((prevMessages) => [...prevMessages, aiResponse]);
             console.log(messages)
+            setIsLoading(false)
         }, 1); // Simulate a 1-second delay
 
+        const aiResponseAnalysis = analyzeText(aiResponseText);
+        if (aiResponseAnalysis.tokens.includes('professional') || aiResponseAnalysis.tokens.includes('therapist')) {
+            console.log('needs doctor');
+            setTimeout(() => {
+                doctorSearchConfirmation()
+            }, 5); // Simulate a 1-second delay
+
+        };
 
         console.log(messages)
         if (messageListRef.current) {
@@ -167,9 +181,9 @@ function Chat() {
         <div
             key={Math.random()}
             className={`chat-bubble ${message.sender === 'User' ? 'user' : 'ai'}`}
-            style={{ maxWidth: '70%' }}
+            style={{ maxWidth: '70%', margin: '20px 10px' }}
         >
-            <b>{message.sender}:</b> {message.message}
+            <b>{message.sender == 'AI' ? "WellnestX" : "User"}</b> <AIMarkdown markdownText={message.message} />
             <span className="timestamp">{message.timestamp}</span>
             <div>
                 {(message.showdoctor === 'true') && message.sender === 'AI' ? <DoctorList keyword={searchTerm} /> : " "}
@@ -210,9 +224,14 @@ function Chat() {
                     <div style={{
                         overflowY: 'scroll',
                         margin: 'auto',
-                        width: '100%'
+                        width: '100%',
+                        paddingBottom: '100px'
 
-                    }}><ul style={{ display: 'flex', flexDirection: 'column' }}>{messageList}</ul></div>
+                    }}><ul style={{ display: 'flex', flexDirection: 'column', paddingBottom: '45px' }}>{messageList}</ul>
+                        {isLoading && <div style={{ marginLeft: '10px' }}>  <Button loading variant="plain">
+                            Plain
+                        </Button></div>}
+                    </div>
                     <div className="chat-input">
                         <input
                             type="text"

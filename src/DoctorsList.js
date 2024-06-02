@@ -31,7 +31,10 @@ function DoctorList({ keyword }) {
             doctor.speciality.toLowerCase().includes(keyword) || doctor.name.toLowerCase().includes(keyword)
         );
         setDoctors(filteredDoctors);
-        console.log("Filtering")
+        if (filteredDoctors.length === 0) {
+            setDoctors(unfilteredDoctors);
+        }
+        console.log("Filtering with", keyword)
     }, [keyword, unfilteredDoctors]);
 
 
