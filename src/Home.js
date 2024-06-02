@@ -15,7 +15,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import IconButton from '@mui/material/IconButton'; // Import IconButton for arrows
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'; // Import ArrowBackIosIcon for previous slide
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'; // Import ArrowForwardIosIcon for next slide
-import care from './Resources/care.png'
+//import care from './Resources/care.png'
 
 const Home = () => {
   const { user } = useContext(AuthContext)
@@ -82,12 +82,43 @@ const Home = () => {
     setCurrentSlide((prevSlide) => (prevSlide - 1 + tips.length) % tips.length); // Handle negative modulo
   };
 
+  const cardStyle = {
+    aspectRatio: '1/1',
+    padding: '15px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
+    borderRadius: '4px',
+    backgroundColor: '#bbea93',
+    color: 'black',
+    transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+    margin: '10px',
+    maxWidth: '250px',
+  };
+
+  const handleCardHover = (event) => {
+    event.target.style.transform = 'scale(0.98)'; // Reduce size on hover
+    event.target.style.boxShadow = 'rgba(0, 0, 0, 0.3) 0px 4px 12px'; // Increase shadow on hover
+  };
+
+  const handleCardLeave = (event) => {
+    event.target.style.transform = 'scale(1)'; // Restore original size
+    event.target.style.boxShadow = 'rgba(0, 0, 0, 0.1) 0px 4px 12px'; // Restore original shadow
+  };
+
+  const exploreTopicsStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '20%', // 20% top margin from the slider
+  };
 
 
   return (
     <div>
       <CssBaseline />
-      <Box sx={{ display: 'flex', minHeight: '100dvh', background: '#f5f5f5' }}>
+      <Box sx={{ display: 'flex', height: '100dvh', background: '#f5f5f5' }}>
         <Sidebar />
         <Header />
         <Box
@@ -108,9 +139,9 @@ const Home = () => {
             justifyContent: { md: 'space-evenly', xs: 'flex-start' },
             alignItems: { md: 'flex-start', xs: 'center' },
             alignContent: 'flex-start',
-            flexWrap: 'wrap'
-          }} >
+            flexWrap: 'wrap',
 
+          }}>
           <Box sx={{//the hero section style (:'( ))
             display: 'flex',
             flexDirection: 'column',
@@ -122,7 +153,7 @@ const Home = () => {
             top: 0,
             left: 0,
             width: '100%',
-            height: '38vh',
+
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
             textAlign: 'left',
@@ -161,17 +192,14 @@ const Home = () => {
                 />
               </Box>
             </Box>
-            <img src={care} style={{
-              width: '250px', height: '250px',
 
-              transform: 'translate(200%, -70%)',
-            }} alt="Hero section image"></img>
           </Box>
 
         </Box >
 
 
       </Box>
+
       {tips.length > 0 && ( // Only display content if tips are fetched(i honestly dont know what tf is happening here)
         <>
           <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'center' }}>
@@ -199,31 +227,25 @@ const Home = () => {
         </>
       )
       }
-      <Box
-        sx={(theme) => ({
-          height: '100%',
-          width: '100%',
-          position: 'fixed',
-          right: 0,
-          top: 0,
-          bottom: 0,
-          left: 0,
-          zIndex: -5,
-          transition:
-            'background-image var(--Transition-duration), left var(--Transition-duration) !important',
-          transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
-          backgroundColor: 'background.level1',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundImage:
-            'url(https://t3.ftcdn.net/jpg/05/87/64/16/360_F_587641642_GnVhXpvkKtqMWtAutjqq5gMQznlOwOh7.jpg)',
-          [theme.getColorSchemeSelector('dark')]: {
-            backgroundImage:
-              'url(https://images.unsplash.com/photo-1572072393749-3ca9c8ea0831?auto=format&w=1000&dpr=2)',
-          },
-        })}
-      />
+
+      <Box sx={exploreTopicsStyle}>
+        <Typography variant="h6" sx={{ color: 'black', marginBottom: '10px' }}>
+          Explore Topics
+        </Typography>
+        <Box sx={{ display: 'flex', gap: '20px' }}>
+          <Card sx={cardStyle} onMouseEnter={handleCardHover} onMouseLeave={handleCardLeave}>
+            <Typography variant="body1">Anxiety</Typography>
+          </Card>
+          <Card sx={cardStyle} onMouseEnter={handleCardHover} onMouseLeave={handleCardLeave}>
+            <Typography variant="body1">Depression</Typography>
+          </Card>
+          <Card sx={cardStyle} onMouseEnter={handleCardHover} onMouseLeave={handleCardLeave}>
+            <Typography variant="body1">Stress</Typography>
+          </Card>
+        </Box>
+      </Box>
+
+
     </div >
   );
 }
