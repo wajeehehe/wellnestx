@@ -6,8 +6,11 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState("null");
-    const [userData, setUserData] = useState("null");
+    const [user, setUser] = useState('null');
+    const [userData, setUserData] = useState({
+        fullname: null,
+        email: null
+    });
 
     const userDoc = collection(db, "users")
     useEffect(() => {
@@ -21,10 +24,9 @@ const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password)
-            setUser(userCredential.user);
-            const q = query(userDoc, where("email", "==", user.email));
-            getUserDatafromDB(q)
-            return Promise.resolve();
+            setUser(userCredential.user)
+            getUserDatafromDB()
+            return Promise.resolve()
         }
         catch (error) {
             console.error(error)
@@ -42,13 +44,14 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-    const getUserDatafromDB = async (q) => {
+    const getUserDatafromDB = async () => {
+        const q = query(userDoc, where("email", "==", user.email));
         const querySnapshot = await getDocs(q);
         setUserData(querySnapshot.docs[0].data());
-        if (userData != "null")
-            localStorage.setItem('userData', JSON.stringify(userData));
+        //     if (userData != null)
+        //         localStorage.setItem('userData', JSON.stringify(userData));
+        // }
     }
-
     return (
         <AuthContext.Provider value={{ user, userData, setUser, setUserData, login, logout }}>
             {children}
