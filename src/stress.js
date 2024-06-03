@@ -9,8 +9,12 @@ import AuthContext from './AuthContext';
 import Input from '@mui/joy/Input';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/joy/Button';
+import logo from './Resources/Logo.jpg';
+
 
 const Stsite = () => {
+    //let navigate = useNavigate();
+
     return (
         <div>
             <CssBaseline />
@@ -61,7 +65,9 @@ const Stsite = () => {
                         }}>
 
                         <Typography variant="h1" sx={{ color: '#f0f1f1', fontSize: '36px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >Stress</Typography>
+
                     </Box>
+
                     <Box sx={{
                         my: 5,
                         padding: '0px 30px 0px 30px',
