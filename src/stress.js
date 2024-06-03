@@ -123,7 +123,7 @@ const Stsite = () => {
                         <br />
                         <Typography variant="h2" sx={{ color: '#648876', fontSize: '1.4rem !important', fontFamily: 'Montserrat', fontWeight: 'bold', textAlign: 'center !important' }}>" In the end, just three things matter: How well we have lived. How well we have loved. How well we have learned to let go. "</Typography>
                         <br />
-                        <Typography variant="h2" sx={{ color: 'black', fontSize: '1.4rem !important', fontFamily: 'Montserrat', fontWeight: 'bold' }} >Coping with trauma</Typography>
+                        <Typography variant="h2" sx={{ color: 'black', fontSize: '1.4rem !important', fontFamily: 'Montserrat', fontWeight: 'bold' }} >Coping with stress</Typography>
                         <p>Being prepared for periods of stress can make it easier to get through them. And knowing how to manage our wellbeing can help us recover after a stressful event. Some of us may refer to our ability to manage stress as our resilience.Here are things you can try that might help with how you're feeling.</p>
                         <p>Don't worry if some ideas don't work for you. Just try the ones that do.</p>
                         <ul>

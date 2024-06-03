@@ -82,7 +82,7 @@ const Site = () => {
                         <br />
                         <Typography variant="h2" sx={{ color: '#648876', fontSize: '1.4rem !important', fontFamily: 'Montserrat', fontWeight: 'bold', textAlign: 'center !important' }}>" You are not your trauma. Your dysfunctions are not a measurement of your true ability. "</Typography>
                         <br />
-                        <Typography variant="h2" sx={{ color: 'black', fontSize: '1.4rem !important', fontFamily: 'Montserrat', fontWeight: 'bold' }} >Effects of trauma?</Typography>
+                        <Typography variant="h2" sx={{ color: 'black', fontSize: '1.4rem !important', fontFamily: 'Montserrat', fontWeight: 'bold' }} >Effects of trauma</Typography>
                         <p>When we feel stressed or threatened, our bodies release hormones called cortisol and adrenaline. This is the body's way of preparing to respond to danger, and we have no control over it.</p>
                         <p>This can have a range of effects, which are sometimes called:</p>
                         <ul>
@@ -112,13 +112,12 @@ const Site = () => {
                         <p>Trauma can cause strong feelings and difficult experiences. It can take time and support to be able to cope. But there are things you can try that might help with how you're feeling.</p>
                         <p>Don't worry if some ideas don't work for you. Just try the ones that do.</p>
                         <ul>
-                            <li>Read a book or a magazine, even if it's only for a few minutes.</li>
-                            <li>Run yourself a bath, watch a film, play with a pet or try out a new recipe.</li>
-                            <li>Take a walk, going at your own pace. You might choose to go for a longer walk, but even a few minutes of walking can help you feel relaxed.</li>
-                            <li>Learning to breathe more deeply can help you feel a lot calmer for a more clear demonstration <a href='https://www.youtube.com/watch?v=wfDTp2GogaQ'>try following this</a></li>
-                            <li>Try painting, drawing, making crafts, playing a musical instrument, dancing, baking or sewing.
-                            </li>
-                            <li>Listen to your favourite songs. You could dance or sing along, or just close your eyes and enjoy.</li>
+                            <li>If the trauma has made you feel unsafe or threatened, it can help to go to a safe space. This could be a friend of family member's home, a refuge, a hospital, or just somewhere away from the trauma.</li>
+                            <li>After trauma, we might forget to eat, sleep and look after ourselves. These things might feel very difficult. But resting and hydrating ourselves gives our mind the energy it needs to process the trauma. And can help us think what we need to do next.</li>
+                            <li>If your body has been harmed, get any medical help you need. When we experience trauma we can go into shock. So you might not realise you've been harmed right away.</li>
+                            <li>Focus on your breathing and ground yourself. Learning to breathe more deeply can help you feel a lot calmer for a more clear demonstration <a href='https://www.youtube.com/watch?v=wfDTp2GogaQ'>try following this</a></li>
+                            <li>After trauma, you might need to make some decisions for your safety and wellbeing</li>
+                            <li>It's ok to cry, be angry, or laugh. Try and speak with someone you trust so you can express how you're really feeling..</li>
 
                         </ul>
                     </Box>
