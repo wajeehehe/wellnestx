@@ -117,7 +117,10 @@ const Lms = () => {
                                     </AspectRatio>
                                 </CardOverflow>
                                 <CardContent>
-                                    <Typography level="body-xs" sx={{ padding: '10px 10px' }}>{topic.name}</Typography>
+                                    <Typography level="body-xs" sx={{ padding: '10px 10px', fontWeight: 'bold' }}>{topic.name}</Typography>
+                                    <Typography level="body-sm">
+                                        {topic.text}
+                                    </Typography>
                                 </CardContent>
 
                                 <a href={topic.url} style={{ display: 'inline-block', width: '100%' }}>
