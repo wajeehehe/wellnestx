@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import AuthProvider from './AuthProvider.js'
 import PrivateRoute from './PrivateRoute.js'
 import TimeslotList from './TimeslotList.js'
-
+import Lms from './lms.js'
 
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
             <Route path="/test" element={<TimeslotList />} />
+            <Route path="/lms" element={<Lms />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
