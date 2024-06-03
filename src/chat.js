@@ -223,7 +223,7 @@ function Chat() {
 
     return (
 
-        <Box sx={{ display: 'flex', minHeight: '100dvh', background: '#D5E5E5' }}>
+        <Box sx={{ display: 'flex', minHeight: '100dvh', background: 'rgba(12, 163, 12, 0.1)' }}>
             <Sidebar />
             <Header />
             <Box
@@ -256,7 +256,7 @@ function Chat() {
                         width: '100%',
                         paddingBottom: '100px'
 
-                    }}> <h1 style={{ fontSize: '72px', color: 'green', opacity: '0.9' }}>WellNestX</h1>
+                    }}> <h1 style={{ fontSize: '72px', color: '#2c554b', opacity: '0.9' }}>WellNestX</h1>
                         <ul onScroll={handleScroll} style={{ display: 'flex', flexDirection: 'column', paddingBottom: '45px' }}>{messageList}</ul>
                         <div style={{ position: 'absolute', right: '25px', bottom: '25px', background: '#fff', padding: '25px' }}>Diagnosis : {diagnosis != '' ? diagnosis : 'None'} </div>
                         {isLoading && <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: 5 }}>  <Skeleton variant="rounded" width={'70%'} height={60} />
@@ -279,7 +279,7 @@ function Chat() {
                             onKeyPress={handleKeyPress}
                             placeholder="Type your message..."
                         />
-                        <Button disabled={inputFieldDisabled} sx={{ width: '15%' }} onClick={sendMessage}>Send</Button>
+                        <Button disabled={inputFieldDisabled} sx={{ width: '15%', backgroundColor: '#bbea93', color: '#2c554b' }} onClick={sendMessage}>Send</Button>
                     </div>
 
 

@@ -100,7 +100,7 @@ const Lms = () => {
                             zIndex: 1,
                         }}>
 
-                        <Typography variant="h1" sx={{ color: '#f0f1f1', fontSize: '36px' }}>LMS Site</Typography>
+                        <Typography variant="h1" sx={{ color: '#f0f1f1', fontSize: '36px', fontFamily: 'Montserrat', fontWeight: 'bold' }}>LMS Site</Typography>
 
                     </Box>
                     <Box sx={{ display: 'flex', gap: '30px', justifyContent: 'center' }}>
@@ -117,13 +117,16 @@ const Lms = () => {
                                     </AspectRatio>
                                 </CardOverflow>
                                 <CardContent>
-                                    <Typography level="body-xs" sx={{ padding: '10px 10px', fontWeight: 'bold', fontSize: '18px' }}>{topic.name}</Typography>
-                                    <Typography level="body-sm" sx={{ padding: '10px 10px', fontSize: '16px' }} >
+                                    <Typography level="body-xs" sx={{ padding: '10px 10px', fontWeight: 'bold', fontSize: '18px', fontFamily: 'Montserrat' }}>{topic.name}</Typography>
+                                    <Typography level="body-sm" sx={{ padding: '10px 10px', fontSize: '16px', fontFamily: 'Montserrat' }} >
                                         {topic.text}
                                     </Typography>
                                 </CardContent>
                                 <a href={topic.url} style={{ display: 'inline-block', width: '100%' }}>
-                                    <Button sx={{ width: '100%' }} variant="solid" color="success" size="lg">
+                                    <Button sx={{
+                                        width: '100%', fontFamily: 'Montserrat', backgroundColor: '#bbea93',
+                                        color: '#2c554b'
+                                    }} variant="solid" size="lg">
                                         Learn more
                                     </Button>
                                 </a>
