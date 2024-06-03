@@ -60,7 +60,7 @@ const Lms = () => {
 
                 <Box //main
                     component="main"
-                    className="MainContent"
+                    className="LmsContent"
                     sx={{
                         boxSizing: 'border-box',
                         backdropFilter: 'blur(22px)',
@@ -100,7 +100,7 @@ const Lms = () => {
                             zIndex: 1,
                         }}>
 
-                        <Typography variant="h1" sx={{ color: '#f0f1f1', fontSize: '36px', fontFamily: 'Montserrat', fontWeight: 'bold' }}>LMS Site</Typography>
+                        <Typography variant="h1" sx={{ color: '#f0f1f1', fontSize: '36px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >LMS Site</Typography>
 
                     </Box>
                     <Box sx={{ display: 'flex', gap: '30px', justifyContent: 'center' }}>

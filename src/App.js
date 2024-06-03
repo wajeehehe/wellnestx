@@ -9,7 +9,10 @@ import AuthProvider from './AuthProvider.js'
 import PrivateRoute from './PrivateRoute.js'
 import TimeslotList from './TimeslotList.js'
 import Lms from './lms.js'
-
+import Site from './trauma.js'
+import Dsite from './depression.js'
+import Asite from './anxiety.js'
+import Stsite from './stress.js'
 
 function App() {
 
@@ -24,6 +27,10 @@ function App() {
             <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
             <Route path="/test" element={<TimeslotList />} />
             <Route path="/lms" element={<Lms />} />
+            <Route path="/trauma" element={<Site />} />
+            <Route path="/depression" element={<Dsite />} />
+            <Route path="/anxiety" element={<Asite />} />
+            <Route path="/stress" element={<Stsite />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

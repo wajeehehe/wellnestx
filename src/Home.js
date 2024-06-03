@@ -35,8 +35,7 @@ const Home = () => {
     { name: "Anxiety", slug: '/anxiety' },
     { name: "Depression", slug: '/depression' },
     { name: "Stress", slug: '/stress' },
-    { name: "Trauma", slug: '/trauma' },
-    { name: "ADHD", slug: '/adhd' }]
+    { name: "Trauma", slug: '/trauma' }]
 
   const handleShowDoctorsList = () => {
     setShowDoctorsList(!showDoctorsList);
@@ -81,7 +80,8 @@ const Home = () => {
     width: '15vw',
     borderRadius: '15px',
     border: 0,
-    padding: '35px 15px'
+    padding: '35px 15px',
+    cursor: 'pointer'
   };
 
 
@@ -200,7 +200,7 @@ const Home = () => {
             </h2>
             <Box sx={{ display: 'flex', gap: '25px', justifyContent: 'flex-start' }}>
               {topicsList.map(topic => (
-                <Card sx={cardStyle} >
+                <Card sx={cardStyle} onClick={() => { navigate(topic.slug) }}>
                   < Typography variant="body1" sx={{ fontFamily: 'Montserrat', fontWeight: 'bold', color: '#272727dd' }}>{topic.name}</Typography>
                 </Card>
               ))}
