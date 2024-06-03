@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, addDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import Input from '@mui/joy/Input';
+import DateDropdown from './datePicker';
 
 
 
@@ -9,21 +10,22 @@ const TimeslotList = (props) => {
     const [filteredAppointments, setFilteredAppointments] = useState([]);
     const [unfilteredappointments, setUnfilteredAppointments] = useState([]);
     const [docid, setDocid] = useState(props.doctor.docID);
+    const [timeSlots, setTimeSlots] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(4)
 
 
-    const [timeSlots, setTimeSlots] = useState([
-        { time: 13, available: true },
-        { time: 14, available: true },
-        { time: 15, available: true },
-        { time: 16, available: true },
-        { time: 17, available: true },
-        { time: 18, available: true },
-        { time: 19, available: true },
-        { time: 20, available: true },
-        { time: 21, available: true },
-        { time: 22, available: true },
-        { time: 23, available: true },
-    ]);
+    const updateDate = (timing) => {
+        const formattedDate = selectedDate.toString().slice(-2);
+        return { ...timing, date: formattedDate };
+    };
+
+    useEffect(() => {
+        // Update date properties in timings array
+        const updatedTimings = timeSlots.map(updateDate); // Optional: Use updateDate function
+        setTimeSlots(updatedTimings);
+        console.log(timeSlots)
+    }, [selectedDate]); // Update effect only when timings change
+
 
     const getAppointmentsData = async () => {
         const appointmentsCollection = collection(db, 'Appointments');
@@ -32,6 +34,18 @@ const TimeslotList = (props) => {
         const appointmentList = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
         setUnfilteredAppointments(appointmentList);
         console.log("appointments")
+        const timings = []
+        for (let i = props.doctor.startTime; i < props.doctor.endTime; i++) {
+            const timeSlot = {
+                time: i,
+                available: true,
+                date: new Date().getDate()
+            }
+            timings.push(timeSlot);
+        }
+
+        setTimeSlots(timings);
+
 
     };
 
@@ -42,16 +56,16 @@ const TimeslotList = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log(unfilteredappointments)
+
         if (docid && (unfilteredappointments.length > 0)) {
             const filteredAppointment = unfilteredappointments.filter((appointment) =>
                 appointment.docID.toLowerCase().includes(docid) || appointment.patientID.toLowerCase().includes(docid)
             );
-            console.log(filteredAppointment)
+
             // setFilteredAppointments(filteredAppointment);
             const updatedTimeSlots = timeSlots.map((timeSlot) => {
                 let isBooked = false;
-                isBooked = ((filteredAppointment.length > 0) ? filteredAppointment.some((appointment) => appointment.time == timeSlot.time) : false);
+                isBooked = ((filteredAppointment.length > 0) ? filteredAppointment.some((appointment) => (appointment.time == timeSlot.time)) : false);
 
 
 
@@ -68,7 +82,7 @@ const TimeslotList = (props) => {
 
 
 
-    }, [docid, unfilteredappointments]);
+    }, [docid, unfilteredappointments, selectedDate]);
 
     const handleTimeSlotClick = (clickedTimeSlot) => {
         if (clickedTimeSlot.available) {
@@ -84,20 +98,13 @@ const TimeslotList = (props) => {
         const newAppointment = {
             docID: docid.toString(),
             patientID: "1", // Hardcoded for now
-            date: 4, // Hardcoded for now
+            date: selectedDate.toString().slice(-2), // Hardcoded for now
             time: selectedTime,
         };
 
         punchAppointment(newAppointment);
         getAppointmentsData();
 
-        const aiResponse = {
-            sender: 'AI',
-            message: `appoinment booked with ${props.doctor.name} at time ${newAppointment.time}`,
-            timestamp: new Date().toLocaleTimeString(),
-            showdoctor: false
-        };
-        console.log(aiResponse.message)
         props.popupClose()
     };
     const punchAppointment = async (appointment) => {
@@ -115,10 +122,7 @@ const TimeslotList = (props) => {
 
     return (
         <div>
-            <Input
-                value={docid}
 
-            />
 
             <ul className="doctorsList" style={{ margin: 'auto', display: 'flex', flexDirection: 'row', gap: 10 }}>
                 {timeSlots.map((timeSlot) => (
@@ -131,7 +135,10 @@ const TimeslotList = (props) => {
                         justifyContent: 'center',
                         backgroundColor: (timeSlot.available) ? 'white' : 'lightgray', // Visual cue for booked slots
                         pointerEvents: (timeSlot.available) ? '' : 'none', // Disable interactions on booked slots
-                    }} onClick={() => handleTimeSlotClick(timeSlot)}>
+                    }} onClick={() => {
+                        handleTimeSlotClick(timeSlot)
+                        console.log(selectedDate)
+                    }}>
                         {timeSlot.time === 24
                             ? '12 AM'
                             : timeSlot.time < 12

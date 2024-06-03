@@ -14,6 +14,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import Sentiment from 'sentiment';
 import AIMarkdown from './responseMarkdown';
 import Skeleton from '@mui/material/Skeleton';
+import app from './firebase';
 
 function Chat() {
     const genAI = new GoogleGenerativeAI('AIzaSyCNiF2GazkApUyMJgjWIEAQ1_QjjaPhqf8');
@@ -73,7 +74,7 @@ function Chat() {
 
         const aiResponse = {
             sender: 'AI',
-            message: `Great! Your appointment is booked with Dr. ${capitalize(doctor.name)} at ${(appointment.time > 12) ? (appointment.time - 12) + 'PM' : appointment.time + 'AM'} today! `,
+            message: `Great! Your appointment is booked with Dr. ${capitalize(doctor.name)} at ${(appointment.time > 12) ? (appointment.time - 12) + 'PM' : appointment.time + 'AM'} today! at ${appointment.date} `,
             timestamp: new Date().toLocaleTimeString(),
             showdoctor: 'pending'
         };
