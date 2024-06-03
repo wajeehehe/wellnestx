@@ -9,21 +9,7 @@ const TimeslotList = (props) => {
     const [filteredAppointments, setFilteredAppointments] = useState([]);
     const [unfilteredappointments, setUnfilteredAppointments] = useState([]);
     const [docid, setDocid] = useState(props.doctor.docID);
-
-
-    const [timeSlots, setTimeSlots] = useState([
-        { time: 13, available: true },
-        { time: 14, available: true },
-        { time: 15, available: true },
-        { time: 16, available: true },
-        { time: 17, available: true },
-        { time: 18, available: true },
-        { time: 19, available: true },
-        { time: 20, available: true },
-        { time: 21, available: true },
-        { time: 22, available: true },
-        { time: 23, available: true },
-    ]);
+    const [timeSlots, setTimeSlots] = useState([]);
 
     const getAppointmentsData = async () => {
         const appointmentsCollection = collection(db, 'Appointments');
@@ -32,6 +18,17 @@ const TimeslotList = (props) => {
         const appointmentList = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
         setUnfilteredAppointments(appointmentList);
         console.log("appointments")
+        const timings = []
+        for (let i = props.doctor.startTime; i < props.doctor.endTime; i++) {
+            const timeSlot = {
+                time: i,
+                available: true
+            }
+            timings.push(timeSlot);
+        }
+        console.log("timings arr: ", timings)
+        setTimeSlots(timings);
+        console.log('timeslots ', timeSlots);
 
     };
 
@@ -42,12 +39,12 @@ const TimeslotList = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log(unfilteredappointments)
+
         if (docid && (unfilteredappointments.length > 0)) {
             const filteredAppointment = unfilteredappointments.filter((appointment) =>
                 appointment.docID.toLowerCase().includes(docid) || appointment.patientID.toLowerCase().includes(docid)
             );
-            console.log(filteredAppointment)
+
             // setFilteredAppointments(filteredAppointment);
             const updatedTimeSlots = timeSlots.map((timeSlot) => {
                 let isBooked = false;
