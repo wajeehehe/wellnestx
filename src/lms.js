@@ -32,7 +32,7 @@ const Lms = () => {
         borderRadius: '15px',
         border: 0,
         top: '20px',
-        maxWidth: '200px !important'
+        maxWidth: '300px !important'
     };
 
     const getLmsList = async () => {
@@ -117,12 +117,11 @@ const Lms = () => {
                                     </AspectRatio>
                                 </CardOverflow>
                                 <CardContent>
-                                    <Typography level="body-xs" sx={{ padding: '10px 10px', fontWeight: 'bold' }}>{topic.name}</Typography>
-                                    <Typography level="body-sm">
+                                    <Typography level="body-xs" sx={{ padding: '10px 10px', fontWeight: 'bold', fontSize: '18px' }}>{topic.name}</Typography>
+                                    <Typography level="body-sm" sx={{ padding: '10px 10px', fontSize: '16px' }} >
                                         {topic.text}
                                     </Typography>
                                 </CardContent>
-
                                 <a href={topic.url} style={{ display: 'inline-block', width: '100%' }}>
                                     <Button sx={{ width: '100%' }} variant="solid" color="success" size="lg">
                                         Learn more
