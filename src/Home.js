@@ -16,6 +16,8 @@ import IconButton from '@mui/material/IconButton'; // Import IconButton for arro
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'; // Import ArrowBackIosIcon for previous slide
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'; // Import ArrowForwardIosIcon for next slide
 import SimpleSlider from './slider.js';
+import logo from './Resources/Logo.jpg'
+import { CenterFocusStrong } from '@mui/icons-material';
 
 
 //import care from './Resources/care.png'
@@ -27,11 +29,13 @@ const Home = () => {
   const [doctorSearchKeyword, setDoctorSearchKeyword] = useState();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [tips, setTips] = useState([]); // Array to store fetched tips
+  const [upcomingAppointments, setUpcomingAppointments] = useState(["You have an upcoming appointment at 2PM with Dr. Wajeeh Hassan today!"])
   const topicsList = [
     { name: "Anxiety", slug: '/anxiety' },
     { name: "Depression", slug: '/depression' },
     { name: "Stress", slug: '/stress' },
-    { name: "Trauma", slug: '/trauma' }]
+    { name: "Trauma", slug: '/trauma' },
+    { name: "ADHD", slug: '/adhd' }]
 
   const handleShowDoctorsList = () => {
     setShowDoctorsList(!showDoctorsList);
@@ -96,8 +100,8 @@ const Home = () => {
     color: 'black',
     boxShadow: '0 0 25px 0 #0001',
     transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-    margin: '10px',
-    width: '250px',
+    margin: '0px',
+    width: '15vw',
     borderRadius: '15px',
     border: 0,
     padding: '35px 15px'
@@ -136,27 +140,59 @@ const Home = () => {
           <Box //Hero
             sx={{//the hero section style (:'( ))
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: 'row',
               gap: 2,
               background: '#2c554b',
               color: '#f0f4f4',
               padding: { lg: '25px', md: '10px 25px' },
-              minHeight: { lg: '30dvh', md: '15dvh' },
+              minHeight: { lg: '15dvh', md: '5dvh' },
               borderRadius: '15px',
               position: 'relative',
               top: 0,
               left: 0,
               width: '100%',
 
-              justifyContent: 'flex-start',
+              justifyContent: 'space-between',
               alignItems: 'flex-start',
               textAlign: 'left',
               zIndex: 1,
             }}>
-            <Typography level='h1' sx={{ color: '#f0f1f1' }}>Welcome {userData.fullName ? userData.fullName : "Laiba"} !</Typography>
-            <Typography variant="h5" sx={{ color: '#f0f1f1', fontSize: '22px' }}>Great to have you on board!</Typography>
-            <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px' }}>You're not alone :) Own your journey.</Typography>
-            <Input
+            <Box sx={{
+              padding: '25px',
+              height: '100%',
+              width: '70%',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              background: '#2c554b',
+              color: '#f0f4f4',
+              justifyContent: 'center'
+            }}>
+              <Typography level='h1' sx={{ color: '#f0f1f1' }}>Welcome {userData.fullName ? userData.fullName : "Laiba"} !</Typography>
+              <Typography variant="h5" sx={{ color: '#f0f1f1', fontSize: '22px' }}>Great to have you on board!</Typography>
+              <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px' }}>You're not alone :) Own your journey.</Typography>
+            </Box>
+            <Box sx={{
+              padding: '25px',
+              boxSizing: 'border-box',
+              height: { lg: '225px', sm: '175px' },
+              aspectRatio: '1/1',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              background: '#fff',
+              color: '#f0f4f4',
+              borderRadius: '15px',
+              justifyContent: 'center',
+              alignItems: 'center',
+              boxShadow: '0 0 25px 0 #e7e7e730'
+            }}>
+              <img src={logo} style={{ width: '100px', height: '75px', objectFit: 'contain' }} />
+              <h2 style={{ color: '#2E7D32', margin: '5px 0' }}>WellNestX AI</h2>
+              <Button color="success" onClick={() => { navigate('/chat') }}>Talk Now!</Button>
+
+            </Box>
+            {/* <Input
               sx={{ position: 'absolute', right: '25px', top: '25px' }}
               startDecorator={<SearchIcon color='success' />}
               color=""
@@ -164,21 +200,28 @@ const Home = () => {
               size="lg"
               variant="outlined"
 
-            />
+            /> */}
 
 
           </Box>
-          <Box sx={{ width: '100%', overflow: 'hidden' }}>
-            <SimpleSlider data={tips} />
+          <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} >
+            <Box sx={{ width: '65%', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+              <h2>Tips for your Mental Health</h2>
+              <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', }}><SimpleSlider childClass="sliding-tips" data={tips} /></Box>
+            </Box>
+            <Box sx={{ width: '30%', overflow: 'hidden', flexDirection: 'column' }}>
+              <h2>Upcoming Appointments</h2>
+              <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', }}><SimpleSlider childClass="upcoming" data={upcomingAppointments} /></Box>
+            </Box>
           </Box>
 
           <Box //Explore Topics
-            sx={{ display: 'flex', flexDirection: 'column', gap: 0, padding: '15px', width: '100%' }}
+            sx={{ display: { xl: 'flex', lg: 'none' }, flexDirection: 'column', gap: 0, padding: '5px', width: '100%', alignItems: 'flex-start' }}
           >
-            <h2 style={{ color: '#272727', marginBottom: '10px', fontFamily: 'Montserrat' }}>
+            <h2 style={{ color: '#272727', marginBottom: '20px', fontFamily: 'Montserrat' }}>
               Explore Topics
             </h2>
-            <Box sx={{ display: 'flex', gap: '2px', justifyContent: 'center' }}>
+            <Box sx={{ display: 'flex', gap: '25px', justifyContent: 'flex-start' }}>
               {topicsList.map(topic => (
                 <Card sx={cardStyle} >
                   < Typography variant="body1" sx={{ fontFamily: 'Montserrat', fontWeight: 'bold', color: '#272727dd' }}>{topic.name}</Typography>
