@@ -100,7 +100,7 @@ const Lms = () => {
                             zIndex: 1,
                         }}>
 
-                        <Typography variant="h1" sx={{ color: '#f0f1f1', fontSize: '36px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >LMS Site</Typography>
+                        <Typography variant="h1" sx={{ color: '#f0f1f1', fontSize: '36px', fontFamily: 'Montserrat !important', fontWeight: 'bold' }} >LMS Site</Typography>
 
                     </Box>
                     <Box sx={{ display: 'flex', gap: '30px', justifyContent: 'center' }}>
@@ -122,11 +122,11 @@ const Lms = () => {
                                         {topic.text}
                                     </Typography>
                                 </CardContent>
-                                <a href={topic.url} style={{ display: 'inline-block', width: '100%' }}>
+                                <a href={topic.url} style={{ display: 'inline-block', width: '100%', textDecoration: 'none', }}>
                                     <Button sx={{
-                                        width: '100%', fontFamily: 'Montserrat', backgroundColor: '#bbea93',
+                                        width: '100%', fontFamily: 'Montserrat !important', backgroundColor: '#bbea93',
                                         color: '#2c554b'
-                                    }} variant="solid" size="lg">
+                                    }} variant="soft" color='success' size="lg">
                                         Learn more
                                     </Button>
                                 </a>

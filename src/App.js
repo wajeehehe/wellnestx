@@ -14,6 +14,7 @@ import Dsite from './depression.js'
 import Asite from './anxiety.js'
 import Stsite from './stress.js'
 
+
 function App() {
 
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/depression" element={<Dsite />} />
             <Route path="/anxiety" element={<Asite />} />
             <Route path="/stress" element={<Stsite />} />
+
           </Routes>
         </BrowserRouter>
       </AuthProvider>
