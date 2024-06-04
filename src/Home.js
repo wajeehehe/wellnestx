@@ -1,4 +1,4 @@
-import DashboardTemplate from './Dashboard/DashboardTemplate'
+
 import Sidebar from './Dashboard/components/SIdebar'
 import React, { useContext, useEffect, useState } from 'react'
 import CssBaseline from '@mui/joy/CssBaseline';
@@ -6,18 +6,12 @@ import { useNavigate } from 'react-router-dom'
 import { Box, Card, Typography } from '@mui/joy'
 import Header from './Dashboard/components/Header';
 import AuthContext from './AuthContext';
-import Input from '@mui/joy/Input';
-import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/joy/Button';
 import { db } from './firebase.js';
-import DoctorsList from './DoctorsList.js';
 import { collection, query, where, getDocs } from "firebase/firestore";
-import IconButton from '@mui/material/IconButton'; // Import IconButton for arrows
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'; // Import ArrowBackIosIcon for previous slide
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'; // Import ArrowForwardIosIcon for next slide
 import SimpleSlider from './slider.js';
 import logo from './Resources/Logo.jpg'
-import { CenterFocusStrong } from '@mui/icons-material';
+
 
 
 

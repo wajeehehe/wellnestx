@@ -1,11 +1,8 @@
-import DashboardTemplate from './Dashboard/DashboardTemplate'
+
 import Sidebar from './Dashboard/components/SIdebar'
-import React, { useState, useRef, useContext, useEffect } from 'react'
-import CssBaseline from '@mui/joy/CssBaseline';
-import { useNavigate } from 'react-router-dom'
-import { Box, Card, Input, TextField, Typography } from '@mui/joy'
+import React, { useState, useRef } from 'react'
+import { Box, Input } from '@mui/joy'
 import Button from '@mui/joy/Button';
-import Stack from '@mui/joy/Stack';
 import Header from './Dashboard/components/Header';
 import AuthContext from './AuthContext';
 import './chat.css'
@@ -14,7 +11,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import Sentiment from 'sentiment';
 import AIMarkdown from './responseMarkdown';
 import Skeleton from '@mui/material/Skeleton';
-import app from './firebase';
+
 
 function Chat() {
     const genAI = new GoogleGenerativeAI('AIzaSyCNiF2GazkApUyMJgjWIEAQ1_QjjaPhqf8');
@@ -24,7 +21,6 @@ function Chat() {
     const messageListRef = useRef(null)
     const [inputFieldDisabled, setInputFieldDisabled] = useState(null)
     const [doctorSearchConfirmationActive, setDoctorSearchConfirmationActive] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
     const [diagnosis, setDiagnosis] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const adminInstructions = {
@@ -212,7 +208,7 @@ function Chat() {
             className={`chat-bubble ${message.sender === 'User' ? 'user' : 'ai'}`}
             style={{ maxWidth: '70%', margin: '20px 10px' }}
         >
-            <b>{message.sender == 'AI' ? "WellnestX" : "User"}</b> <AIMarkdown markdownText={message.message} />
+            <b>{message.sender === 'AI' ? "WellnestX" : "User"}</b> <AIMarkdown markdownText={message.message} />
             <span className="timestamp">{message.timestamp}</span>
             <div>
                 {(message.showdoctor === 'true') && message.sender === 'AI' ? <DoctorList keyword={diagnosis} appointmentBookedConfirmation={appointmentBookedConfirmation} /> : " "}
@@ -258,7 +254,7 @@ function Chat() {
 
                     }}> <h1 style={{ fontSize: '72px', color: '#2c554b', opacity: '0.9' }}>WellNestX</h1>
                         <ul onScroll={handleScroll} style={{ display: 'flex', flexDirection: 'column', paddingBottom: '45px' }}>{messageList}</ul>
-                        <div style={{ position: 'absolute', right: '25px', bottom: '25px', background: '#fff', padding: '25px' }}>Diagnosis : {diagnosis != '' ? diagnosis : 'None'} </div>
+                        <div style={{ position: 'absolute', right: '25px', bottom: '25px', background: '#fff', padding: '25px' }}>Diagnosis : {diagnosis !== '' ? diagnosis : 'None'} </div>
                         {isLoading && <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: 5 }}>  <Skeleton variant="rounded" width={'70%'} height={60} />
                             <Skeleton variant="rounded" width={'70%'} height={20} />
                             <Skeleton variant="rounded" width={'50%'} height={20} /></div>}

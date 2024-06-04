@@ -9,10 +9,10 @@ import AuthProvider from './AuthProvider.js'
 import PrivateRoute from './PrivateRoute.js'
 import TimeslotList from './TimeslotList.js'
 import Lms from './lms.js'
-import Site from './trauma.js'
-import Dsite from './depression.js'
-import Asite from './anxiety.js'
-import Stsite from './stress.js'
+import Site from './lmsResources/trauma.js'
+import Dsite from './lmsResources/depression.js'
+import Asite from './lmsResources/anxiety.js'
+import Stsite from './lmsResources/stress.js'
 
 
 function App() {

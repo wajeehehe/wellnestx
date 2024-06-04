@@ -1,15 +1,9 @@
-import DashboardTemplate from './Dashboard/DashboardTemplate'
-import Sidebar from './Dashboard/components/SIdebar'
-import React, { useContext, useEffect, useState } from 'react'
-import CssBaseline from '@mui/joy/CssBaseline';
-import { useNavigate } from 'react-router-dom'
-import { Box, Card, Typography } from '@mui/joy'
-import Header from './Dashboard/components/Header';
-import AuthContext from './AuthContext';
-import Input from '@mui/joy/Input';
-import SearchIcon from '@mui/icons-material/Search';
-import Button from '@mui/joy/Button';
 
+import Sidebar from '../Dashboard/components/SIdebar'
+import React from 'react'
+import { Box, Typography } from '@mui/joy'
+import Header from '../Dashboard/components/Header';
+import CssBaseline from '@mui/joy/CssBaseline';
 const Dsite = () => {
     return (
         <div>
