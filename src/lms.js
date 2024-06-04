@@ -100,12 +100,12 @@ const Lms = () => {
                             zIndex: 1,
                         }}>
 
-                        <Typography variant="h1" sx={{ color: '#f0f1f1', fontSize: '36px', fontFamily: 'Montserrat !important', fontWeight: 'bold' }} >LMS Site</Typography>
+                        <Typography variant="h1" sx={{ color: '#f0f1f1', fontSize: '36px', fontFamily: 'Montserrat !important', fontWeight: 'bold' }} >LMS Library</Typography>
 
                     </Box>
                     <Box sx={{ display: 'flex', gap: '30px', justifyContent: 'center' }}>
                         {lmsData.map(topic => (
-                            <Card sx={lmsCardsStyle}>
+                            <Card sx={lmsCardsStyle} className="lms-post">
                                 <CardOverflow>
                                     <AspectRatio sx={{ minWidth: 200 }}>
                                         <img
@@ -117,8 +117,8 @@ const Lms = () => {
                                     </AspectRatio>
                                 </CardOverflow>
                                 <CardContent>
-                                    <Typography level="body-xs" sx={{ padding: '10px 10px', fontWeight: 'bold', fontSize: '18px', fontFamily: 'Montserrat' }}>{topic.name}</Typography>
-                                    <Typography level="body-sm" sx={{ padding: '10px 10px', fontSize: '16px', fontFamily: 'Montserrat' }} >
+                                    <Typography level="body-xs" className="lms-post-title" sx={{ padding: '10px 10px', fontWeight: 'bold', fontSize: '18px', fontFamily: 'Montserrat' }}>{topic.name}</Typography>
+                                    <Typography level="body-sm" className="lms-post-desc" sx={{ padding: '10px 10px', fontSize: '16px', fontFamily: 'Montserrat' }} >
                                         {topic.text}
                                     </Typography>
                                 </CardContent>

@@ -35,7 +35,8 @@ const Home = () => {
     { name: "Anxiety", slug: '/anxiety' },
     { name: "Depression", slug: '/depression' },
     { name: "Stress", slug: '/stress' },
-    { name: "Trauma", slug: '/trauma' }]
+    { name: "Trauma", slug: '/trauma' },
+    { name: "Adhd", slug: '/adhd' }]
 
   const handleShowDoctorsList = () => {
     setShowDoctorsList(!showDoctorsList);
@@ -78,10 +79,12 @@ const Home = () => {
     transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
     margin: '0px',
     width: '15vw',
+    maxWidth: '150px',
     borderRadius: '15px',
     border: 0,
-    padding: '35px 15px',
-    cursor: 'pointer'
+    padding: '15px',
+    cursor: 'pointer',
+    fontSize: '1em'
   };
 
 
@@ -122,7 +125,8 @@ const Home = () => {
               background: '#2c554b',
               color: '#f0f4f4',
               padding: { lg: '25px', md: '10px 25px' },
-              minHeight: { lg: '15dvh', md: '5dvh' },
+              minHeight: { lg: '25dvh', md: '5dvh' },
+              height: '35%',
               borderRadius: '15px',
               position: 'relative',
               top: 0,
@@ -130,7 +134,7 @@ const Home = () => {
               width: '100%',
 
               justifyContent: 'space-between',
-              alignItems: 'flex-start',
+              alignItems: 'center',
               textAlign: 'left',
               zIndex: 1,
             }}>
@@ -140,19 +144,19 @@ const Home = () => {
               width: '70%',
               display: 'flex',
               flexDirection: 'column',
-              gap: 2,
+              gap: 1,
               background: '#2c554b',
               color: '#f0f4f4',
               justifyContent: 'center'
             }}>
-              <Typography level='h1' sx={{ color: '#f0f1f1' }}>Welcome {userData.fullName ? userData.fullName : "Friend"} !</Typography>
-              <Typography variant="h5" sx={{ color: '#f0f1f1', fontSize: '22px' }}>Great to have you on board!</Typography>
-              <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px' }}>Remember you're not alone. Own your journey.</Typography>
+              <Typography level='h1' sx={{ color: '#f0f1f1', margin: 0, fontSize: '2em' }}>Welcome {userData.fullName ? userData.fullName : "Wajeeh"} !</Typography>
+              <Typography variant="h5" sx={{ color: '#f0f1f1', fontSize: '22px', margin: 0, fontSize: '1.2em' }}>Great to have you on board!</Typography>
+              <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px', margin: 0, fontSize: '1.2em' }}>Remember you're not alone. Own your journey.</Typography>
             </Box>
             <Box sx={{
-              padding: '25px',
+              padding: '15px 20px',
               boxSizing: 'border-box',
-              height: { lg: '225px', sm: '175px' },
+              height: { lg: '190px', sm: '175px' },
               aspectRatio: '1/1',
               display: 'flex',
               flexDirection: 'column',
@@ -164,8 +168,8 @@ const Home = () => {
               alignItems: 'center',
               boxShadow: '0 0 25px 0 #e7e7e730'
             }}>
-              <img src={logo} style={{ width: '100px', height: '75px', objectFit: 'contain' }} />
-              <h2 style={{ color: '#2E7D32', margin: '5px 0' }}>WellNestX AI</h2>
+              <img src={logo} style={{ width: '75px', height: '75px', objectFit: 'contain' }} />
+              <h2 style={{ color: '#2E7D32', margin: '5px 0', fontSize: '1.2em' }}>WellNestX AI</h2>
               <Button color="success" onClick={() => { navigate('/chat') }}>Talk Now!</Button>
 
             </Box>
@@ -193,15 +197,15 @@ const Home = () => {
           </Box>
 
           <Box //Explore Topics
-            sx={{ display: { xl: 'flex', lg: 'none' }, flexDirection: 'column', gap: 0, padding: '5px', width: '100%', alignItems: 'flex-start' }}
+            sx={{ position: 'relative', bottom: 0, width: '100%', display: { xl: 'flex', lg: 'none' }, flexDirection: 'column', gap: 0, padding: 0, width: '100%', alignItems: 'flex-start' }}
           >
-            <h2 style={{ color: '#272727', marginBottom: '20px', fontFamily: 'Montserrat' }}>
+            <h2 style={{ color: '#272727', marginBottom: '20px', fontFamily: 'Montserrat', marginTop: '-5px' }}>
               Explore Topics
             </h2>
-            <Box sx={{ display: 'flex', gap: '25px', justifyContent: 'flex-start' }}>
+            <Box sx={{ display: 'flex', gap: '15px', justifyContent: 'flex-start' }}>
               {topicsList.map(topic => (
                 <Card sx={cardStyle} onClick={() => { navigate(topic.slug) }}>
-                  < Typography variant="body1" sx={{ fontFamily: 'Montserrat', fontWeight: 'bold', color: '#272727dd' }}>{topic.name}</Typography>
+                  < Typography variant="body1" sx={{ fontFamily: 'Montserrat', fontWeight: 'bold', color: '#272727dd', fontSize: '0.9em' }}>{topic.name}</Typography>
                 </Card>
               ))}
             </Box>
