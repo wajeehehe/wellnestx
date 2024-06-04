@@ -31,6 +31,8 @@ import Forest from '@mui/icons-material/Forest';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AuthContext from '../../AuthContext.js';
 import { useContext } from 'react';
+import Lms from '../../lms.js';
+
 // import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils.jsx';
 function Toggler({
@@ -158,7 +160,10 @@ export default function Sidebar(props) {
           </ListItem>
 
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              role="menuitem"
+              component="a"
+              href="/lms">
               <DashboardRoundedIcon />
               <ListItemContent>
                 <Typography level="title-sm">LMS</Typography>

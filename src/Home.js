@@ -20,7 +20,7 @@ import logo from './Resources/Logo.jpg'
 import { CenterFocusStrong } from '@mui/icons-material';
 
 
-//import care from './Resources/care.png'
+
 
 const Home = () => {
   const { user } = useContext(AuthContext)
@@ -30,12 +30,12 @@ const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [tips, setTips] = useState([]); // Array to store fetched tips
   const [upcomingAppointments, setUpcomingAppointments] = useState(["You have an upcoming appointment at 2PM with Dr. Wajeeh Hassan today!"])
+
   const topicsList = [
     { name: "Anxiety", slug: '/anxiety' },
     { name: "Depression", slug: '/depression' },
     { name: "Stress", slug: '/stress' },
-    { name: "Trauma", slug: '/trauma' },
-    { name: "ADHD", slug: '/adhd' }]
+    { name: "Trauma", slug: '/trauma' }]
 
   const handleShowDoctorsList = () => {
     setShowDoctorsList(!showDoctorsList);
@@ -70,30 +70,6 @@ const Home = () => {
 
   let navigate = useNavigate();
 
-  //setting the card style  
-  const cards = {
-    aspectRatio: '1/1',
-    padding: '15px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
-    borderRadius: '4px',
-    marginBottom: '20px',
-    height: '300px',
-    width: '450px'
-  };
-
-
-  //scrolling to the next slide by the use of arrows
-  const handleNextSlide = () => {
-    setCurrentSlide((prevSlide) => (prevSlide + 1) % tips.length);
-  };
-
-  const handlePrevSlide = () => {
-    setCurrentSlide((prevSlide) => (prevSlide - 1 + tips.length) % tips.length); // Handle negative modulo
-  };
 
   const cardStyle = {
     backgroundColor: '#bbea93',
@@ -104,7 +80,8 @@ const Home = () => {
     width: '15vw',
     borderRadius: '15px',
     border: 0,
-    padding: '35px 15px'
+    padding: '35px 15px',
+    cursor: 'pointer'
   };
 
 
@@ -138,7 +115,7 @@ const Home = () => {
 
           }}>
           <Box //Hero
-            sx={{//the hero section style (:'( ))
+            sx={{
               display: 'flex',
               flexDirection: 'row',
               gap: 2,
@@ -168,9 +145,9 @@ const Home = () => {
               color: '#f0f4f4',
               justifyContent: 'center'
             }}>
-              <Typography level='h1' sx={{ color: '#f0f1f1' }}>Welcome {userData.fullName ? userData.fullName : "Laiba"} !</Typography>
+              <Typography level='h1' sx={{ color: '#f0f1f1' }}>Welcome {userData.fullName ? userData.fullName : "Friend"} !</Typography>
               <Typography variant="h5" sx={{ color: '#f0f1f1', fontSize: '22px' }}>Great to have you on board!</Typography>
-              <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px' }}>You're not alone :) Own your journey.</Typography>
+              <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px' }}>Remember you're not alone. Own your journey.</Typography>
             </Box>
             <Box sx={{
               padding: '25px',
@@ -223,7 +200,7 @@ const Home = () => {
             </h2>
             <Box sx={{ display: 'flex', gap: '25px', justifyContent: 'flex-start' }}>
               {topicsList.map(topic => (
-                <Card sx={cardStyle} >
+                <Card sx={cardStyle} onClick={() => { navigate(topic.slug) }}>
                   < Typography variant="body1" sx={{ fontFamily: 'Montserrat', fontWeight: 'bold', color: '#272727dd' }}>{topic.name}</Typography>
                 </Card>
               ))}
