@@ -285,7 +285,7 @@ div>a {
 .sliding-tips>div>span {
 
   font-family: 'Playfair Display' !important;
-  font-size: 1.7em;
+  font-size: 2vw;
   font-weight: 500;
   color: #373737;
   font-style: italic;
@@ -294,6 +294,24 @@ div>a {
 
 }
 
+.MuiBox-root.css-3hexbg,
+.MuiBox-root.css-3hexbg .swiper {
+  height: 100% !important;
+}
+
+.swiper-slide>div {
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+.swiper-pagination {
+  text-align: right !important;
+  bottom: 0px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #2C554B;
+}
 
 
 .upcoming>div>span {

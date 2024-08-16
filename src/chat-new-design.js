@@ -11,10 +11,15 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import Sentiment from 'sentiment';
 import AIMarkdown from './responseMarkdown';
 import Skeleton from '@mui/material/Skeleton';
+import { useEffect } from 'react';
 
 
 function ChatNewDesign() {
-    const genAI = new GoogleGenerativeAI('AIzaSyCNiF2GazkApUyMJgjWIEAQ1_QjjaPhqf8');
+    const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
+    useEffect(() => {
+        console.log('API Key:', apiKey);
+    });
+    const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
     const [messages, setMessages] = useState([]); // Array to store messages
     const [userInput, setUserInput] = useState(''); // State for user input
@@ -219,7 +224,7 @@ function ChatNewDesign() {
 
     return (
 
-        <Box sx={{ display: 'flex', minHeight: '100dvh', background: '#fff' }}>
+        <Box sx={{ display: 'flex', minHeight: '100dvh', background: '#f2f2f2' }}>
             <Sidebar />
             <Header />
             <Box
@@ -254,7 +259,7 @@ function ChatNewDesign() {
                         paddingLeft: '50px',
                         paddingRight: '50px'
 
-                    }}> <h1 style={{ fontSize: '72px', color: '#2c554b', opacity: '0.9' }}>WellNestX</h1>
+                    }}> <h1 className="chatHeading" style={{ fontSize: '72px', opacity: '0.9' }}>WellNestX</h1>
                         <ul onScroll={handleScroll} style={{ display: 'flex', flexDirection: 'column', paddingBottom: '45px' }}>{messageList}</ul>
                         <div style={{ position: 'absolute', right: '25px', bottom: '25px', background: '#41665D', padding: '25px', color: 'wheat' }}>Diagnosis : {diagnosis !== '' ? diagnosis : 'None'} </div>
                         {isLoading && <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: 5 }}>  <Skeleton variant="rounded" width={'70%'} height={60} />
@@ -263,10 +268,10 @@ function ChatNewDesign() {
 
                     </div>
 
-                    <div className="chat-input" style={{ display: 'center', justifyContent: 'center', gap: '25px', padding: '25px', background: '#fff', }}>
+                    <div className="chat-input" style={{ display: 'center', justifyContent: 'center', gap: '25px', padding: '25px', background: '#f2f2f250', backdropFilter: 'blur(5px)' }}>
                         <Input
                             disabled={inputFieldDisabled}
-                            sx={{ width: '85%' }}
+                            className='inputBox' sx={{ width: '100%', borderRadius: '50px' }}
                             type="text"
                             value={userInput}
                             onChange={(event) => {

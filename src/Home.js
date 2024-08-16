@@ -141,7 +141,7 @@ const Home = () => {
             }}>
               <Typography level='h1' sx={{ color: '#f0f1f1', margin: 0, fontSize: '2em' }}>Welcome {userData.fullName ? userData.fullName : "Wajeeh"} !</Typography>
               <Typography variant="h5" sx={{ color: '#f0f1f1', fontSize: '22px', margin: 0, fontSize: '1.2em' }}>Great to have you on board!</Typography>
-              <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px', margin: 0, fontSize: '1.2em' }}>Remember you're not alone. Own your journey.</Typography>
+              <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px', margin: 0, fontSize: '1.2em' }}>Remember you're not alone. WellNestX is here to help you.</Typography>
             </Box>
             <Box sx={{
               padding: '15px',
