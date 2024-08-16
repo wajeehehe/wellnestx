@@ -13,7 +13,7 @@ import AIMarkdown from './responseMarkdown';
 import Skeleton from '@mui/material/Skeleton';
 
 
-function Chat() {
+function ChatNewDesign() {
     const genAI = new GoogleGenerativeAI('AIzaSyCNiF2GazkApUyMJgjWIEAQ1_QjjaPhqf8');
     const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
     const [messages, setMessages] = useState([]); // Array to store messages
@@ -208,7 +208,7 @@ function Chat() {
             className={`chat-bubble ${message.sender === 'User' ? 'user' : 'ai'}`}
             style={{ maxWidth: '70%', margin: '20px 10px' }}
         >
-            <b>{message.sender === 'AI' ? "WellnestX" : "User"}</b> <AIMarkdown className="message" markdownText={message.message} />
+            <b>{message.sender === 'AI' ? "WellnestX" : "User"}</b> <AIMarkdown markdownText={message.message} />
             <span className="timestamp">{message.timestamp}</span>
             <div>
                 {(message.showdoctor === 'true') && message.sender === 'AI' ? <DoctorList keyword={diagnosis} appointmentBookedConfirmation={appointmentBookedConfirmation} /> : " "}
@@ -229,7 +229,6 @@ function Chat() {
                     pt: { xs: 'calc(15px + var(--Header-height)) !important', md: 3 },
                     pb: '0 !important',
                     padding: { xs: 2, sm: 2, md: 3 },
-
                     flex: 1,
                     display: 'flex',
                     flexDirection: 'column',
@@ -245,23 +244,26 @@ function Chat() {
             >
 
 
-                <div className="chat-container" style={{ maxWidth: '800px', margin: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
-                    <div ref={messageListRef} style={{
+                <div className="chat-container " style={{ margin: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', border: 0, justifyContent: 'flex-start', paddingTop: '35px' }}>
+                    <div className="scroll-style-3" ref={messageListRef} style={{
                         overflowY: 'scroll',
-                        margin: 'auto',
+                        margin: ' 0 auto',
                         width: '100%',
-                        paddingBottom: '100px'
+                        paddingBottom: '100px',
+                        maxWidth: '800px',
+                        paddingLeft: '50px',
+                        paddingRight: '50px'
 
                     }}> <h1 style={{ fontSize: '72px', color: '#2c554b', opacity: '0.9' }}>WellNestX</h1>
                         <ul onScroll={handleScroll} style={{ display: 'flex', flexDirection: 'column', paddingBottom: '45px' }}>{messageList}</ul>
-                        <div style={{ position: 'absolute', right: '25px', bottom: '25px', background: '#fff', padding: '25px' }}>Diagnosis : {diagnosis !== '' ? diagnosis : 'None'} </div>
+                        <div style={{ position: 'absolute', right: '25px', bottom: '25px', background: '#41665D', padding: '25px', color: 'wheat' }}>Diagnosis : {diagnosis !== '' ? diagnosis : 'None'} </div>
                         {isLoading && <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: 5 }}>  <Skeleton variant="rounded" width={'70%'} height={60} />
                             <Skeleton variant="rounded" width={'70%'} height={20} />
                             <Skeleton variant="rounded" width={'50%'} height={20} /></div>}
 
                     </div>
 
-                    <div className="chat-input" style={{ display: 'center', justifyContent: 'center', gap: '25px', paddingBottom: '25px' }}>
+                    <div className="chat-input" style={{ display: 'center', justifyContent: 'center', gap: '25px', padding: '25px', background: '#fff', }}>
                         <Input
                             disabled={inputFieldDisabled}
                             sx={{ width: '85%' }}
@@ -286,4 +288,4 @@ function Chat() {
     );
 }
 
-export default Chat
+export default ChatNewDesign

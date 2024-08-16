@@ -13,6 +13,7 @@ import Site from './lmsResources/trauma.js'
 import Dsite from './lmsResources/depression.js'
 import Asite from './lmsResources/anxiety.js'
 import Stsite from './lmsResources/stress.js'
+import ChatNewDesign from './chat-new-design.js'
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/depression" element={<Dsite />} />
             <Route path="/anxiety" element={<Asite />} />
             <Route path="/stress" element={<Stsite />} />
+            <Route path="/chat-new" element={<ChatNewDesign />} />
 
           </Routes>
         </BrowserRouter>
