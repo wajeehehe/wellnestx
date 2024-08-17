@@ -2,40 +2,34 @@ import { Box } from '@mui/joy';
 import Sidebar from './Dashboard/components/SIdebar'
 import Header from './Dashboard/components/Header';
 import CssBaseline from '@mui/joy/CssBaseline';
-const Support = () => {
+import emailjs from '@emailjs/browser';
+import { useRef } from 'react';
+import email from './Resources/send-mail.png';
 
-    const containerStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        aligncontent: 'center',
-        borderRadius: '8px',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-        padding: '25px',
-        backgroundColor: '#CAE6B2',
+export const Support = () => {
+    const form = useRef();
 
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs
+            .sendForm('service_5j23b1f', 'template_23qtx9d', form.current, {
+                publicKey: 'EHulVSDYFrqk_m4MY',
+            })
+            .then(
+                () => {
+                    console.log('SUCCESS!');
+                },
+                (error) => {
+                    console.log('FAILED...', error.text);
+                },
+            );
     };
-
-    const headingStyle = {
-        fontSize: '2rem',
-        marginBottom: '20px'
-    };
-
-    const listStyle = {
-        listStyleType: 'none',
-        padding: '0'
-    };
-
-    const listItemStyle = {
-        margin: '10px 0'
-    };
-
-
 
     return (
         <div>
             <CssBaseline />
-            <Box sx={{ display: 'flex', height: '100dvh', background: '#f5f5f5' }}>
+            <Box sx={{ display: 'flex', height: '100dvh', background: '#E7FBE6' }}>
                 <Sidebar />
                 <Header />
                 <Box //main
@@ -43,38 +37,53 @@ const Support = () => {
                     className="MainContent"
                     sx={{
                         boxSizing: 'border-box',
-                        backdropFilter: 'blur(22px)',
                         pt: { xs: 'calc(25px + var(--Header-height)) !important', md: 3 },
                         padding: { xs: 2, sm: 2, md: 3 },
                         flex: 1,
                         display: 'flex',
                         flexDirection: 'column',
                         minWidth: 0,
-                        height: '100dvh',
                         columnGap: 0,
-                        gap: { md: 1, xs: 3 },
+                        gap: { md: 5, xs: 3 },
                         overflow: 'auto',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        alignContent: 'flex-start',
                         flexWrap: 'no-wrap',
 
                     }}>
 
-                    <Box style={containerStyle}>
+                    <Box
+                        sx={{
+                            height: '100vh',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-evenly',
 
-                        <h1 style={headingStyle}>Support</h1>
-                        <p>If you need any help, feel free to contact us through one of the following methods:</p>
-                        <ul style={listStyle}>
-                            <li style={listItemStyle}>Email: support@example.com</li>
-                            <li style={listItemStyle}>Phone: +1 (123) 456-7890</li>
-
-                        </ul>
-
+                        }} >
+                        <Box className="leftSide"
+                            sx={{
+                                width: '40%',
+                                border: 'none',
+                                padding: '35px',
+                                borderradius: '35px',
+                                background: '#wE7FBE6',
+                                aspectRatio: '1/1'
+                            }}
+                        >
+                            <h2 style={{ textAlign: 'left', fontSize: '28px', color: '#2c554b', fontFamily: 'Montserrat' }}>GET IN TOUCH!</h2>
+                            <form ref={form} onSubmit={sendEmail} className='contactform' style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '18px' }}  >
+                                <label>Name</label>
+                                <input type="text" name="from_name" placeholder='Your name...' />
+                                <label>Email</label>
+                                <input type="email" name="from_email" placeholder='Your email...' />
+                                <label>Message</label>
+                                <textarea name="message" placeholder='Your message...' />
+                                <input type="submit" value="Send" />
+                            </form>
+                        </Box>
+                        <Box className="RightSide">
+                            <img src={email} alt='abc'></img>
+                        </Box>
                     </Box>
                 </Box>
-
-
             </Box>
         </div>
     );
