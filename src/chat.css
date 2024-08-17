@@ -1,3 +1,36 @@
+.chatHeading {
+    background: linear-gradient(-45deg, #41665D, #059483);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent !important;
+    font-size: 72px;
+    color: rgb(44, 85, 75);
+    opacity: 0.9;
+}
+
+.inputBox {
+    padding: 0 !important;
+    border: 0;
+    box-shadow: none !important;
+}
+
+.inputBox input {
+    border-radius: 50px;
+    margin: 0 !important;
+    padding: 5px 25px !important;
+}
+
+.chat-container button {
+    border-radius: 25px;
+    transition: 0.3s ease;
+}
+
+.chat-container button:hover {
+    border-radius: 25px;
+    background: #41665D;
+    color: #fff;
+}
+
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -20,23 +53,39 @@
 
 .chat-bubble {
     display: inline-block;
-    padding: 10px 15px;
-    border-radius: 10px;
-    /* Rounded corners for bubbles */
     margin-bottom: 5px;
 }
 
+.chat-bubble p {
+    padding: 15px 25px;
+    border-radius: 2em;
+    box-shadow: 0 0 15px 0 #0002;
+
+}
+
 .user {
-    background-color: #eee;
+
     align-self: flex-end;
     /* Right-align user messages */
 }
 
+.user>p {
+    background-color: #eee;
+
+}
+
+
 .ai {
-    background-color: #f5f5f5;
+
     align-self: flex-start;
     text-align: left;
     /* Left-align AI messages */
+}
+
+.ai>p {
+    background: rgb(2, 150, 132);
+    background: linear-gradient(90deg, rgba(2, 150, 132, 1) 0%, rgba(65, 102, 93, 1) 77%);
+    color: #fff;
 }
 
 .timestamp {

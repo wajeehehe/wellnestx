@@ -94,16 +94,14 @@ const Home = () => {
           className="MainContent"
           sx={{
             boxSizing: 'border-box',
-            backdropFilter: 'blur(22px)',
             pt: { xs: 'calc(25px + var(--Header-height)) !important', md: 3 },
             padding: { xs: 2, sm: 2, md: 3 },
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
             minWidth: 0,
-            height: '100dvh',
             columnGap: 0,
-            gap: { md: 1, xs: 3 },
+            gap: { md: 5, xs: 3 },
             overflow: 'auto',
             justifyContent: { md: 'space-between', xs: 'flex-start' },
             alignItems: { md: 'flex-start', xs: 'center' },
@@ -119,9 +117,7 @@ const Home = () => {
               background: '#2c554b',
               color: '#f0f4f4',
               padding: { lg: '25px', md: '10px 25px' },
-              minHeight: { lg: '25dvh', md: '5dvh' },
-              height: '35%',
-              borderRadius: '15px',
+              borderRadius: '35px',
               position: 'relative',
               top: 0,
               left: 0,
@@ -133,7 +129,7 @@ const Home = () => {
               zIndex: 1,
             }}>
             <Box sx={{
-              padding: '25px',
+              padding: '15px',
               height: '100%',
               width: '70%',
               display: 'flex',
@@ -145,16 +141,16 @@ const Home = () => {
             }}>
               <Typography level='h1' sx={{ color: '#f0f1f1', margin: 0, fontSize: '2em' }}>Welcome {userData.fullName ? userData.fullName : "Wajeeh"} !</Typography>
               <Typography variant="h5" sx={{ color: '#f0f1f1', fontSize: '22px', margin: 0, fontSize: '1.2em' }}>Great to have you on board!</Typography>
-              <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px', margin: 0, fontSize: '1.2em' }}>Remember you're not alone. Own your journey.</Typography>
+              <Typography variant="body1" sx={{ color: '#f0f1f1', fontSize: '22px', margin: 0, fontSize: '1.2em' }}>Remember you're not alone. WellNestX is here to help you.</Typography>
             </Box>
             <Box sx={{
-              padding: '15px 20px',
+              padding: '15px',
               boxSizing: 'border-box',
-              height: { lg: '190px', sm: '175px' },
               aspectRatio: '1/1',
+              width: '170px',
               display: 'flex',
               flexDirection: 'column',
-              gap: 2,
+              gap: 0,
               background: '#fff',
               color: '#f0f4f4',
               borderRadius: '15px',
@@ -162,9 +158,9 @@ const Home = () => {
               alignItems: 'center',
               boxShadow: '0 0 25px 0 #e7e7e730'
             }}>
-              <img src={logo} style={{ width: '75px', height: '75px', objectFit: 'contain' }} />
+              <img src={logo} style={{ width: '75px', height: '55px', objectFit: 'contain' }} />
               <h2 style={{ color: '#2E7D32', margin: '5px 0', fontSize: '1.2em' }}>WellNestX AI</h2>
-              <Button color="success" onClick={() => { navigate('/chat') }}>Talk Now!</Button>
+              <Button sx={{ marginTop: '15px' }} color="success" onClick={() => { navigate('/chat') }}>Talk Now!</Button>
 
             </Box>
             {/* <Input
@@ -179,19 +175,22 @@ const Home = () => {
 
 
           </Box>
-          <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} >
-            <Box sx={{ width: '65%', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-              <h2>Tips for your Mental Health</h2>
+          <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', overflow: 'visible' }} >
+            <Box sx={{ width: '65%', overflow: 'hidden', display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', border: 'none', borderRadius: '35px', padding: '35px', boxShadow: '0 0 25px 0 #0001', background: '#fff' }}>
+              <h2 sx={{ textAlign: 'center' }}>Tips for your Mental Health</h2>
               <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', }}><SimpleSlider childClass="sliding-tips" data={tips} /></Box>
             </Box>
-            <Box sx={{ width: '30%', overflow: 'hidden', flexDirection: 'column' }}>
-              <h2>Upcoming Appointments</h2>
-              <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', }}><SimpleSlider childClass="upcoming" data={upcomingAppointments} /></Box>
+            <Box sx={{ width: '30%', overflow: 'hidden', flexDirection: 'column', borderRadius: '35px', background: '#fff', boxShadow: '0 0 25px 0 #0001', padding: '25px', gap: 5 }}>
+              <h2 style={{ textAlign: 'left' }}>Notifications</h2>
+              <Box sx={{ maxHeight: '80%', overflowY: 'scroll' }}>
+                <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', margin: '10px 0' }}><SimpleSlider childClass="upcoming" data={upcomingAppointments} /></Box>
+                <Box sx={{ width: '100%', overflow: 'hidden', display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', margin: '10px 0' }}><SimpleSlider childClass="upcoming" data={upcomingAppointments} /></Box>
+              </Box>
             </Box>
           </Box>
 
           <Box //Explore Topics
-            sx={{ position: 'relative', bottom: 0, width: '100%', display: { xl: 'flex', lg: 'none' }, flexDirection: 'column', gap: 0, padding: 0, width: '100%', alignItems: 'flex-start' }}
+            sx={{ position: 'relative', bottom: 0, width: '100%', display: { xl: 'flex', lg: 'flex' }, flexDirection: 'column', gap: 0, padding: 0, width: '100%', alignItems: 'flex-start' }}
           >
             <h2 style={{ color: '#272727', marginBottom: '20px', fontFamily: 'Montserrat', marginTop: '-5px' }}>
               Explore Topics

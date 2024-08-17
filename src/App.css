@@ -33,10 +33,13 @@ body * {
   text-transform: capitalize;
 }
 
-
+.doctor-popup {
+  z-index: 1000;
+}
 
 .doctor-popup * {
   margin: 0;
+
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -267,24 +270,47 @@ div>a {
 }
 
 .sliding-tips>div {
-  padding: 15px 25px;
-  margin: 0 45px;
-  border: 1px solid #e7e7e7;
-  background-color: rgba(12, 163, 12, 0.1);
+  padding: 5px 0px;
+  margin-bottom: 25px;
+
   border-radius: 15px;
   height: 100%;
-  min-height: 150px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
 }
 
+
 .sliding-tips>div>span {
 
-  font-family: 'Lora';
-  font-size: 1.2vw;
+  font-family: 'Playfair Display' !important;
+  font-size: 2vw;
+  font-weight: 500;
+  color: #373737;
+  font-style: italic;
+  text-align: left;
+  margin-bottom: 25px;
 
+}
+
+.MuiBox-root.css-3hexbg,
+.MuiBox-root.css-3hexbg .swiper {
+  height: 100% !important;
+}
+
+.swiper-slide>div {
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+.swiper-pagination {
+  text-align: right !important;
+  bottom: 0px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #2C554B;
 }
 
 
@@ -296,15 +322,16 @@ div>a {
 }
 
 .upcoming>div {
-  padding: 25px 25px;
-  margin: 0 45px;
+  padding: 15px;
+  margin: 0;
   border: 1px solid #e7e7e7;
   background-color: rgba(12, 163, 12, 0.1);
   border-radius: 15px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   height: 100%;
+  text-align: left;
 }
 
 .upcoming div {
@@ -336,4 +363,19 @@ div>a {
 .lms-post * {
   transition: 0.2s ease;
   ;
+}
+
+
+.scroll-style-3::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+
+.scroll-style-3::-webkit-scrollbar {
+  width: 6px;
+  background-color: #F5F5F5;
+}
+
+.scroll-style-3::-webkit-scrollbar-thumb {
+  background-color: #2C554B;
 }
