@@ -16,6 +16,8 @@ import Stsite from './lmsResources/stress.js'
 
 import Support from './support.js'
 
+import Docdash from './doctorDasboard.js'
+
 
 
 function App() {
@@ -36,6 +38,8 @@ function App() {
             <Route path="/anxiety" element={<Asite />} />
             <Route path="/stress" element={<Stsite />} />
             <Route path="/support" element={<Support />} />
+
+            <Route path="/doc-dash" element={<Docdash />} />
 
           </Routes >
         </BrowserRouter >

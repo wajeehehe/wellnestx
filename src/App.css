@@ -395,7 +395,7 @@ div>a {
 .contactform textarea {
   width: 100%;
   max-width: 100%;
-  padding: 25px;
+  padding: 20px;
   height: auto;
   border-width: 1px;
   border-style: solid;
@@ -447,4 +447,106 @@ div>a {
 
 .RightSide img {
   width: 400px;
+}
+
+.DashMain h1 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 15px;
+
+  text-align: left;
+}
+
+.DashMain .boxinfo li {
+  padding: 15px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  gap: 24px;
+}
+
+.DashMain .boxinfo li .bx {
+  width: 80px;
+  height: 80px;
+  font-size: 36px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+}
+
+.DashMain .boxinfo li:nth-child(1) .bx {
+  background: rgb(98, 240, 98);
+  color: green;
+}
+
+.DashMain .boxinfo li:nth-child(2) .bx {
+  background: rgb(98, 240, 98);
+  color: green;
+}
+
+.DashMain .boxinfo li:nth-child(3) .bx {
+  background: rgb(98, 240, 98);
+  color: green;
+}
+
+.DashMain .boxinfo li .text li {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+
+.DashMain .tabledata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: 100%;
+  margin-top: 24px;
+  color: var(--dark);
+}
+
+.DashMain .tabledata>div {
+  border-radius: 20px;
+  background: white;
+  padding: 24px;
+
+}
+
+.DashMain .tabledata .head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.DashMain .tabledata .head h3 {
+  margin-right: auto;
+  font-weight: 600;
+  font-size: 24px;
+
+}
+
+
+.DashMain .tabledata .appointment-list {
+  flex-grow: 1;
+  flex-basis: 500px;
+
+}
+
+.DashMain .tabledata .appointment-list table {
+  width: 100%;
+}
+
+.DashMain .tabledata .appointment-list table th {
+  padding-bottom: 12px;
+  font-size: 16px;
+
+}
+
+.DashMain .tabledata .todo {
+  flex-grow: 1;
+  flex-basis: 300px;
 }
