@@ -7,17 +7,16 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 export default function SimpleSlider({ data, childClass }) {
-    console.log(data)
     if (data)
         return (
             <Swiper
-                modules={[Pagination, A11y]}
+                modules={[A11y]}
                 autoplay={true}
                 spaceBetween={50}
                 slidesPerView={1}
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
-                pagination={{ clickable: true }}
+
             >
 
                 {

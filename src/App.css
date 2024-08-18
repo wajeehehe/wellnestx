@@ -317,8 +317,12 @@ div>a {
 .upcoming>div>span {
 
   font-family: 'Lora';
-  font-size: 1.2vw;
+  font-size: 16px;
 
+}
+
+.upcoming {
+  height: 100%;
 }
 
 .upcoming>div {

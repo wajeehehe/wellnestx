@@ -7,7 +7,7 @@ import DateDropdown from './datePicker';
 
 
 const TimeslotList = (props) => {
-    const [filteredAppointments, setFilteredAppointments] = useState([]);
+
     const [unfilteredappointments, setUnfilteredAppointments] = useState([]);
     const [docid, setDocid] = useState(props.doctor.docID);
     const [timeSlots, setTimeSlots] = useState([]);
@@ -21,7 +21,7 @@ const TimeslotList = (props) => {
 
     useEffect(() => {
         // Update date properties in timings array
-        const updatedTimings = timeSlots.map(updateDate); // Optional: Use updateDate function
+        const updatedTimings = timeSlots.map(updateDate);
         setTimeSlots(updatedTimings);
         console.log(timeSlots)
     }, [selectedDate]); // Update effect only when timings change
@@ -72,11 +72,9 @@ const TimeslotList = (props) => {
                 return { ...timeSlot, available: !isBooked };
             });
 
-            setFilteredAppointments(filteredAppointment);
             setTimeSlots(updatedTimeSlots);
         }
         else {
-            setFilteredAppointments(unfilteredappointments);
             setTimeSlots(timeSlots.map((slot) => ({ ...slot, available: true }))); // Reset availability on empty search
         }
 
@@ -133,8 +131,8 @@ const TimeslotList = (props) => {
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: (timeSlot.available) ? 'white' : 'lightgray', // Visual cue for booked slots
-                        pointerEvents: (timeSlot.available) ? '' : 'none', // Disable interactions on booked slots
+                        backgroundColor: (timeSlot.available) ? 'white' : 'lightgray',
+                        pointerEvents: (timeSlot.available) ? '' : 'none',
                     }} onClick={() => {
                         handleTimeSlotClick(timeSlot)
                         console.log(selectedDate)

@@ -18,12 +18,116 @@ import logo from './Resources/Logo.jpg'
 
 const Home = () => {
   const { user } = useContext(AuthContext)
+  const [doctorMap, setDoctorMap] = useState()
+  const userid = '1';
   const { userData, setUserData } = useContext(AuthContext)
-  const [showDoctorsList, setShowDoctorsList] = useState(false);
-  const [doctorSearchKeyword, setDoctorSearchKeyword] = useState();
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [filteredAppointments, setFilteredAppointments] = useState(null);
   const [tips, setTips] = useState([]); // Array to store fetched tips
   const [upcomingAppointments, setUpcomingAppointments] = useState(["You have an upcoming appointment at 2PM with Dr. Wajeeh Hassan today!"])
+
+
+  const getCurrentMonthName = () => {
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const now = new Date();
+    return monthNames[now.getMonth()];
+  };
+  const capitalizeName = (name) => {
+    if (!name) return "";
+    return name
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+  const getDoctorsData = async () => {
+    try {
+      const appointmentsCollection = collection(db, 'Doctors');
+      const q = query(appointmentsCollection);
+      const doctorsSnapshot = await getDocs(q);
+
+      if (doctorsSnapshot) {
+        const doctorsList = doctorsSnapshot.docs.map(doc => ({ ...doc.data(), docID: doc.data().docID }));
+        console.log(doctorsList);
+
+        // Create a mapping of docID to doctor name
+        const docMap = {};
+        doctorsList.forEach(doctor => {
+          console.log(doctor.docID, doctor.name);
+          docMap[doctor.docID] = doctor.name;
+        });
+
+        setDoctorMap(docMap); // Asynchronous state update
+      }
+    } catch (error) {
+      console.error("Error fetching doctors data:", error);
+    }
+  }
+
+  const getAppointmentsData = async () => {
+    if (!doctorMap) {
+      // Exit if doctorMap is empty
+      return;
+    }
+
+    try {
+      console.log(doctorMap);
+      const appointmentsCollection = collection(db, 'Appointments');
+      const q = query(appointmentsCollection);
+      const querySnapshot = await getDocs(q);
+
+      const appointmentList = querySnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          ...data,
+          id: doc.id,
+          doctorName: doctorMap[data.docID] || "Unknown Doctor"
+        };
+      });
+
+      console.log("Raw Appointments List ");
+      console.log(appointmentList);
+
+      if (userid && appointmentList.length > 0) {
+        const filteredAppointment = appointmentList.filter((appointment) =>
+          appointment.patientID === userid
+        );
+
+        setFilteredAppointments(filteredAppointment);
+        console.log("Filtered Appointments List for User ", userid);
+        console.log(filteredAppointments);
+      }
+    } catch (error) {
+      console.error("Error fetching appointments data:", error);
+    }
+  }
+
+  useEffect(() => {
+    getDoctorsData();
+  }, []); // Fetch doctors data once on component mount
+
+  useEffect(() => {
+    if (doctorMap) {
+      getAppointmentsData();
+    }
+  }, [doctorMap]);
+
+
+
+  useEffect(() => {
+    // This effect runs whenever `filteredAppointments` is updated.
+    if (filteredAppointments) {
+      console.log("Filtered Appointments List for User ", userid);
+      console.log(filteredAppointments);
+      const upcomingAppointmentsRaw = filteredAppointments.map((appointment) => `You have an upcoming appointment with Doctor ${capitalizeName(appointment.doctorName)} at ${appointment.time}:00 on ${appointment.date} ${getCurrentMonthName()}`);
+      setUpcomingAppointments(upcomingAppointmentsRaw);
+      console.log("Running", upcomingAppointmentsRaw);
+    }
+  }
+
+    , [filteredAppointments]);
 
   const topicsList = [
     { name: "Anxiety", slug: '/anxiety' },
@@ -31,19 +135,6 @@ const Home = () => {
     { name: "Stress", slug: '/stress' },
     { name: "Trauma", slug: '/trauma' },
     { name: "Adhd", slug: '/adhd' }]
-
-  const handleShowDoctorsList = () => {
-    setShowDoctorsList(!showDoctorsList);
-    if (showDoctorsList === false) {
-      setShowDoctorsList(true)
-    }
-    console.log(doctorSearchKeyword)
-
-  };
-
-  const handleSearchChange = (event) => {
-    setDoctorSearchKeyword(event.target.value.toLowerCase()); // Lowercase for case-insensitive search
-  };
 
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
@@ -214,5 +305,6 @@ const Home = () => {
     </div >
   );
 }
+
 
 export default Home

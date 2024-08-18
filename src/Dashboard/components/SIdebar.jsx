@@ -260,12 +260,7 @@ export default function Sidebar(props) {
               Support
             </ListItemButton>
           </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <SettingsRoundedIcon />
-              Settings
-            </ListItemButton>
-          </ListItem>
+
         </List>
         {/* <Card
           invertedColors
