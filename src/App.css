@@ -564,6 +564,32 @@ div:has(>.iconBox) {
   width: 30%;
 }
 
+.DashMain .tabledata .todo h2 {
+  margin-right: auto;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.tabledata .todo i:hover {
+  cursor: pointer;
+  transform: scale(1.5);
+  color: #41665D;
+}
+
+.tabledata .todo i {
+  transition: 0.3s ease;
+}
+
+.tabledata .todo tr td {
+  padding: 15px;
+}
+
+.tabledata .todo tr:hover {
+  background: #41665D;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
 .DashMain .tabledata .appointment-list tr td {
   padding: 15px;
 }

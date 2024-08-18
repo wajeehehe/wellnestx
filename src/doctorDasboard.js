@@ -78,31 +78,31 @@ const Docdash = () => {
                     </ul> */}
                     <Box sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' }, width: { xs: '100%', md: '90% !important' } }}>
                         <Box className="iconBox" sx={{}}>
-                            <i class='bx bx-plus-medical'></i>
+                            <i class='bx bx-user-check'></i>
                             <span className='text'>
-                                <h3>200</h3>
-                                <p>Appointments</p>
+                                <h3>115</h3>
+                                <p>New Patients</p>
+                            </span>
+                        </Box>
+                        <Box className="iconBox" sx={{}}>
+                            <i class='bx bx-happy'></i>
+                            <span className='text'>
+                                <h3>80%</h3>
+                                <p>Satisfaction</p>
                             </span>
                         </Box>
                         <Box className="iconBox" sx={{}}>
                             <i class='bx bx-plus-medical'></i>
                             <span className='text'>
-                                <h3>200</h3>
-                                <p>Appointments</p>
+                                <h3>350</h3>
+                                <p>Total Appointments</p>
                             </span>
                         </Box>
                         <Box className="iconBox" sx={{}}>
-                            <i class='bx bx-plus-medical'></i>
+                            <i class='bx bxs-file-plus' ></i>
                             <span className='text'>
-                                <h3>200</h3>
-                                <p>Appointments</p>
-                            </span>
-                        </Box>
-                        <Box className="iconBox" sx={{}}>
-                            <i class='bx bx-plus-medical'></i>
-                            <span className='text'>
-                                <h3>200</h3>
-                                <p>Appointments</p>
+                                <h3>10</h3>
+                                <p>Upcoming Appointments</p>
                             </span>
                         </Box>
 
@@ -150,7 +150,20 @@ const Docdash = () => {
                                 <h2>TODO List</h2>
                                 <i class='bx bx-bell-plus'></i>
                                 <i class='bx bx-filter' ></i>
+
                             </Box>
+                            <table  >
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>Reading patients chart</td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
                         </Box>
                     </Box>
 

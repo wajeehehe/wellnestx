@@ -13,9 +13,7 @@ import Site from './lmsResources/trauma.js'
 import Dsite from './lmsResources/depression.js'
 import Asite from './lmsResources/anxiety.js'
 import Stsite from './lmsResources/stress.js'
-
 import Support from './support.js'
-
 import Docdash from './doctorDasboard.js'
 
 
