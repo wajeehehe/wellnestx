@@ -3,27 +3,40 @@ import Sidebar from './Dashboard/components/SIdebar'
 import Header from './Dashboard/components/Header';
 import CssBaseline from '@mui/joy/CssBaseline';
 import emailjs from '@emailjs/browser';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import email from './Resources/send-mail.png';
+import Alert from '@mui/joy/Alert';
 
 export const Support = () => {
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userMessage, setUserMessage] = useState("");
+    const [formSubmitted, setFormSubmitted] = useState(false);
     const form = useRef();
 
     const sendEmail = (e) => {
+
+
         e.preventDefault();
 
-        emailjs
-            .sendForm('service_5j23b1f', 'template_23qtx9d', form.current, {
-                publicKey: 'EHulVSDYFrqk_m4MY',
-            })
+        emailjs.sendForm('service_5j23b1f', 'template_23qtx9d', form.current, {
+            publicKey: 'EHulVSDYFrqk_m4MY',
+        })
             .then(
                 () => {
                     console.log('SUCCESS!');
+                    setUserName("");
+                    setUserEmail("");
+                    setUserMessage("");
+                    setFormSubmitted(true);
                 },
                 (error) => {
                     console.log('FAILED...', error.text);
                 },
             );
+
+
+
     };
 
     return (
@@ -71,13 +84,14 @@ export const Support = () => {
                             <h2 style={{ textAlign: 'left', fontSize: '28px', color: '#2c554b', fontFamily: 'Montserrat' }}>GET IN TOUCH!</h2>
                             <form ref={form} onSubmit={sendEmail} className='contactform' style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '18px' }}  >
                                 <label>Name</label>
-                                <input type="text" name="from_name" placeholder='Your name...' />
+                                <input type="text" name="from_name" placeholder='Your name...' value={userName} onChange={(e) => { setUserName(e.target.value) }} />
                                 <label>Email</label>
-                                <input type="email" name="from_email" placeholder='Your email...' />
+                                <input type="email" name="from_email" placeholder='Your email...' value={userEmail} onChange={(e) => { setUserEmail(e.target.value) }} />
                                 <label>Message</label>
-                                <textarea name="message" placeholder='Your message...' />
+                                <textarea name="message" placeholder='Your message...' value={userMessage} onChange={(e) => { setUserMessage(e.target.value) }} />
                                 <input type="submit" value="Send" />
                             </form>
+                            {formSubmitted ? <Alert sx={{ marginTop: '25px' }} variant="outlined" color="success">Form Submitted Succesfully</Alert> : ""}
                         </Box>
                         <Box className="RightSide">
                             <img src={email} alt='abc'></img>
