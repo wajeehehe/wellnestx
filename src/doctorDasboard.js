@@ -8,16 +8,14 @@ import CssBaseline from '@mui/joy/CssBaseline';
 
 const Docdash = () => {
 
-    function createData(id, name, age, sex, diagnosis) {
-        return { id, name, age, sex, diagnosis };
-    }
+
 
     const rows = [
-        createData(122, 'Jhon Doe', 59, 'M', 'Depression'),
-        createData(146, 'Abdulrehman Arshad', 36, 'M', 'Trauma'),
-        createData(321, 'Javeria Munir', 'F', 24, 'Anxiety'),
-        createData(456, 'Rimsha Ikhlaq', 'F', 50, 'Depression'),
-        createData(247, 'Javeed Chaudary', 'M', 27, 'Personality Disorder'),
+        { ptid: 122, name: 'Jhon Doe', age: 59, sex: 'M', diagnosis: 'Depression' },
+        { ptid: 146, name: 'Abdulrehman Arshad', age: 36, sex: 'M', diagnosis: 'Trauma' },
+        { ptid: 321, name: 'Javeria Munir', sex: 'F', age: 24, diagnosis: 'Anxiety' },
+        { ptid: 456, name: 'Rimsha Ikhlaq', sex: 'F', age: 50, diagnosis: 'Depression' },
+        { ptid: 247, name: 'Javeed Chaudary', sex: 'M', age: 27, diagnosis: 'Personality Disorder' }
     ];
 
 
@@ -25,7 +23,7 @@ const Docdash = () => {
     return (
         <div>
             <CssBaseline />
-            <Box sx={{ display: 'flex', height: '100dvh', background: '#f5f5f5' }}>
+            <Box sx={{ display: 'flex', background: '#f5f5f5' }}>
                 <Sidebar />
                 <Header />
                 <Box //main
@@ -40,14 +38,14 @@ const Docdash = () => {
                         padding: { xs: 2, sm: 2, md: 3 },
                         gridGap: '16px',
                         width: '100%',
-                        flexWrap: 'wrap',
+                        flexWrap: 'nowrap',
 
 
                     }}>
                     <Box>
                         <h1>DASHBOARD</h1>
                     </Box>
-                    <ul className="boxinfo" style={{
+                    {/* <ul className="boxinfo" style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
                         gap: '50px',
@@ -77,7 +75,39 @@ const Docdash = () => {
                                 <p>Appointments</p>
                             </span>
                         </li>
-                    </ul>
+                    </ul> */}
+                    <Box sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' }, width: { xs: '100%', md: '90% !important' } }}>
+                        <Box className="iconBox" sx={{}}>
+                            <i class='bx bx-plus-medical'></i>
+                            <span className='text'>
+                                <h3>200</h3>
+                                <p>Appointments</p>
+                            </span>
+                        </Box>
+                        <Box className="iconBox" sx={{}}>
+                            <i class='bx bx-plus-medical'></i>
+                            <span className='text'>
+                                <h3>200</h3>
+                                <p>Appointments</p>
+                            </span>
+                        </Box>
+                        <Box className="iconBox" sx={{}}>
+                            <i class='bx bx-plus-medical'></i>
+                            <span className='text'>
+                                <h3>200</h3>
+                                <p>Appointments</p>
+                            </span>
+                        </Box>
+                        <Box className="iconBox" sx={{}}>
+                            <i class='bx bx-plus-medical'></i>
+                            <span className='text'>
+                                <h3>200</h3>
+                                <p>Appointments</p>
+                            </span>
+                        </Box>
+
+
+                    </Box>
 
                     <Box className="tabledata">
                         <div className="appointment-list">
@@ -101,8 +131,8 @@ const Docdash = () => {
                                 </thead>
                                 <tbody>
                                     {rows.map((row) => (
-                                        <tr key={row.id}>
-                                            <td>{row.id}</td>
+                                        <tr key={row.ptid}>
+                                            <td>{row.ptid}</td>
                                             <td>{row.name}</td>
                                             <td>{row.age}</td>
                                             <td>{row.sex}</td>

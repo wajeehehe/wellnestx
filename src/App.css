@@ -451,9 +451,9 @@ div>a {
 
 .DashMain h1 {
   font-size: 36px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 15px;
-
+  color: #41665D;
   text-align: left;
 }
 
@@ -466,38 +466,52 @@ div>a {
   gap: 24px;
 }
 
-.DashMain .boxinfo li .bx {
-  width: 80px;
-  height: 80px;
-  font-size: 36px;
-  border-radius: 10px;
+
+div:has(>.iconBox) {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
   display: flex;
+  flex-direction: row;
+  padding: 25px;
+  gap: 15px;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+}
+
+.iconBox {
+  min-width: 200px;
+  width: 25%;
+  padding: 5px;
+  border-right: 1px solid #e7e7e7;
+  aspect-ratio: 1.3/1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.iconBox:last-of-type {
+  border: none;
+}
+
+.iconBox i {
+  color: #41665D;
+  font-size: 3.5em;
 
 }
 
-.DashMain .boxinfo li:nth-child(1) .bx {
-  background: rgb(98, 240, 98);
-  color: green;
+.iconBox p {
+  font-size: 16px;
 }
 
-.DashMain .boxinfo li:nth-child(2) .bx {
-  background: rgb(98, 240, 98);
-  color: green;
+.iconBox h3 {
+  font-size: 46px;
 }
 
-.DashMain .boxinfo li:nth-child(3) .bx {
-  background: rgb(98, 240, 98);
-  color: green;
+.iconBox p,
+.iconBox h3 {
+  margin: 0;
 }
-
-.DashMain .boxinfo li .text li {
-  font-size: 24px;
-  font-weight: 600;
-}
-
 
 .DashMain .tabledata {
   display: flex;
@@ -531,8 +545,8 @@ div>a {
 
 
 .DashMain .tabledata .appointment-list {
-  flex-grow: 1;
-  flex-basis: 500px;
+
+  width: 65%;
 
 }
 
@@ -541,12 +555,39 @@ div>a {
 }
 
 .DashMain .tabledata .appointment-list table th {
-  padding-bottom: 12px;
+  padding: 12px;
   font-size: 16px;
 
 }
 
 .DashMain .tabledata .todo {
-  flex-grow: 1;
-  flex-basis: 300px;
+  width: 30%;
+}
+
+.DashMain .tabledata .appointment-list tr td {
+  padding: 15px;
+}
+
+.DashMain .tabledata .appointment-list tr:nth-child(2n) {
+  background: #f2f2f2;
+}
+
+.DashMain .tabledata .appointment-list tr {
+  border-radius: 10px !important;
+}
+
+.DashMain .tabledata .appointment-list tr:hover {
+  background: #41665D;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.appointment-list i {
+  transition: 0.3s ease;
+}
+
+.appointment-list i:hover {
+  cursor: pointer;
+  transform: scale(1.5);
+  color: #41665D;
 }
