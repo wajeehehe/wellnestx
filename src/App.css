@@ -383,3 +383,68 @@ div>a {
 .scroll-style-3::-webkit-scrollbar-thumb {
   background-color: #2C554B;
 }
+
+.contactform label {
+  font-weight: 500;
+  font-family: "Montserrat" !important;
+
+}
+
+.contactform input[type='text'],
+.contactform input[type='email'],
+.contactform textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 25px;
+  height: auto;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #eaeaea;
+  border-radius: 50px;
+  background: 0 0;
+  background-color: #fafafa;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all .2s linear;
+  transition: all .2s linear;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: left;
+  border: none;
+  outline: none;
+  font-weight: 500;
+  color: #666;
+}
+
+.contactform input[type='submit'] {
+
+  padding: 12px 35px;
+  border: none;
+  border-radius: 25px;
+  background: green;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+
+}
+
+.contactform textarea {
+  height: 200px;
+}
+
+.contactform textarea:focus {
+  border: 1px solid green;
+}
+
+.contactform input[type='text']:focus,
+.contactform input[type='email']:focus {
+
+  border: 1px solid green;
+}
+
+.RightSide img {
+  width: 400px;
+}

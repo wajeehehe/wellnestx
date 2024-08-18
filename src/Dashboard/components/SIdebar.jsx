@@ -252,7 +252,10 @@ export default function Sidebar(props) {
           }}
         >
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              role="menuitem"
+              component="a"
+              href="/support">
               <SupportRoundedIcon />
               Support
             </ListItemButton>
