@@ -15,7 +15,7 @@ import Asite from './lmsResources/anxiety.js'
 import Stsite from './lmsResources/stress.js'
 import Support from './support.js'
 import ChatNewDesign from './chat-new-design.js'
-
+import Docdash from './doctorDasboard.js'
 
 function App() {
 
@@ -36,7 +36,7 @@ function App() {
             <Route path="/stress" element={<Stsite />} />
             <Route path="/support" element={<Support />} />
             <Route path="/chat-new" element={<ChatNewDesign />} />
-
+            <Route path="/doc-dash" element={<Docdash />} />
           </Routes >
         </BrowserRouter >
       </AuthProvider >
