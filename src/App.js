@@ -13,11 +13,9 @@ import Site from './lmsResources/trauma.js'
 import Dsite from './lmsResources/depression.js'
 import Asite from './lmsResources/anxiety.js'
 import Stsite from './lmsResources/stress.js'
-<<<<<<< HEAD
 
-=======
 import Support from './support.js'
->>>>>>> 3ba82527cdc758e9c7036b2a7c49a5162140f1e9
+
 
 
 function App() {
@@ -37,10 +35,7 @@ function App() {
             <Route path="/depression" element={<Dsite />} />
             <Route path="/anxiety" element={<Asite />} />
             <Route path="/stress" element={<Stsite />} />
-<<<<<<< HEAD
-=======
             <Route path="/support" element={<Support />} />
->>>>>>> 3ba82527cdc758e9c7036b2a7c49a5162140f1e9
 
           </Routes >
         </BrowserRouter >
